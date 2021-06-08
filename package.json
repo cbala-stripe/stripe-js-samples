@@ -3,13 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3005",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "next": "9.3.5",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "@stripe/react-stripe-js": "^1.4.1",
+    "@stripe/stripe-js": "^1.4.0",
+    "next": "^10.2.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-stripe-elements": "^6.1.2",
+    "stripe": "^8.46.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.1",
+    "@types/react": "^17.0.6",
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.3.0",
+    "tailwindcss": "^2.1.2",
+    "typescript": "^3.8.3"
   }
 }
