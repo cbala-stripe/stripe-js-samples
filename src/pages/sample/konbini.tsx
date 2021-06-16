@@ -36,6 +36,7 @@ export default KonbiniSample;
 
 export const getServerSideProps = async () => {
   const stripe = new Stripe(process.env.KONBINI_SK, {
+    // @ts-ignore
     apiVersion: "2020-08-27; konbini_beta=v2",
   });
 
@@ -44,6 +45,7 @@ export const getServerSideProps = async () => {
     currency: "jpy",
     payment_method_types: ["konbini"],
     payment_method_options: {
+      // @ts-ignore
       konbini: {
         product_description: "Tシャツ",
       },
