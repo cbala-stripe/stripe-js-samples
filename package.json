@@ -10,7 +10,7 @@
   "dependencies": {
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.4.0",
-    "next": "^10.2.2",
+    "next": "^11.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-stripe-elements": "^6.1.2",
@@ -22,6 +22,6 @@
     "autoprefixer": "^10.2.5",
     "postcss": "^8.3.0",
     "tailwindcss": "^2.1.2",
-    "typescript": "^3.8.3"
+    "typescript": "^4.3.2"
   }
 }
