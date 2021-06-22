@@ -19,9 +19,13 @@ const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
 
   return (
     <ElementSample
-      stripeOptions={{ betas: ["payment_element_beta_1"] }}
       onSubmit={handleSubmit}
       collectNameAndEmail={false}
+      apiKey={process.env.NEXT_PUBLIC_CONNECT_PK}
+      stripeOptions={{
+        betas: ["payment_element_beta_1"],
+        stripeAccount: process.env.NEXT_PUBLIC_CONNECT_CONNECTED_ACCOUNT_ID,
+      }}
     >
       <PaymentElement options={options} />
     </ElementSample>
@@ -31,23 +35,28 @@ const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
 export default PaymentElementPaymentIntentSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.DEFAULT_SK, {
+  const stripe = new Stripe(process.env.CONNECT_SK, {
     apiVersion: "2020-03-02",
   });
 
-  const { client_secret: clientSecret } = await stripe.paymentIntents.create({
-    amount: 999,
-    currency: "eur",
-    payment_method_types: [
-      "card",
-      "ideal",
-      "bancontact",
-      "eps",
-      "giropay",
-      "p24",
-      "sofort",
-    ],
-  });
+  const { client_secret: clientSecret } = await stripe.paymentIntents.create(
+    {
+      amount: 999,
+      currency: "eur",
+      payment_method_types: [
+        "card",
+        "ideal",
+        "bancontact",
+        "eps",
+        "giropay",
+        "p24",
+        "sofort",
+      ],
+    },
+    {
+      stripeAccount: process.env.NEXT_PUBLIC_CONNECT_CONNECTED_ACCOUNT_ID,
+    }
+  );
 
   return { props: { clientSecret } };
 };

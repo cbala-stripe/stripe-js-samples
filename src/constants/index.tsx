@@ -47,6 +47,14 @@ export const PAGES = [
     title: "Payment Element (SetupIntent)",
     href: "/sample/payment-element-setup-intent",
   },
+  {
+    title: "Payment Element (PaymentIntent + Connect)",
+    href: "/sample/payment-element-payment-intent-connect",
+  },
+  {
+    title: "Payment Element (SetupIntent + Connect)",
+    href: "/sample/payment-element-setup-intent-connect",
+  },
 ];
 
 export const INPUT_CLASSNAME =
