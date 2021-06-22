@@ -9,7 +9,7 @@ const PaymentElementSetupIntentSample = ({ clientSecret }) => {
     return stripe.confirmSetup({
       element: elements.getElement(PaymentElement),
       confirmParams: {
-        return_url: `${window.location.origin}/status`,
+        return_url: `${window.location.origin}/status?account=connect`,
       },
     });
   };
