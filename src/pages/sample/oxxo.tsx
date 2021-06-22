@@ -1,7 +1,5 @@
-import Stripe from "stripe";
-
-import { ElementSample } from "../../components/ElementSample";
-import { KEYS } from "../../constants";
+import { ElementSample, CredentialedElements, Layout } from "../../components";
+import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
 
 const OxxoSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, name, email }) => {
@@ -15,21 +13,26 @@ const OxxoSample = ({ clientSecret }) => {
     });
   };
 
-  return <ElementSample onSubmit={handleSubmit} account="oxxo" />;
+  return (
+    <Layout>
+      <CredentialedElements credentials="oxxo">
+        <ElementSample collectNameAndEmail onSubmit={handleSubmit} />
+      </CredentialedElements>
+    </Layout>
+  );
 };
 
 export default OxxoSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(KEYS.oxxo.secretKey, {
-    apiVersion: "2020-03-02",
-  });
-
-  const { client_secret: clientSecret } = await stripe.paymentIntents.create({
-    amount: 10000,
-    currency: "mxn",
-    payment_method_types: ["oxxo"],
-  });
+  const clientSecret = await getPaymentIntentClientSecret(
+    {
+      amount: 10000,
+      currency: "mxn",
+      payment_method_types: ["oxxo"],
+    },
+    { credentials: "oxxo" }
+  );
 
   return { props: { clientSecret } };
 };

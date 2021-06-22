@@ -1,11 +1,18 @@
-import { useEffect } from "react";
-import Stripe from "stripe";
-import { PaymentElement, useElements } from "@stripe/react-stripe-js";
+import { PaymentElement } from "@stripe/react-stripe-js";
 
-import { ElementSample } from "../../components/ElementSample";
-import { KEYS } from "../../constants";
+import { ElementSample, CredentialedElements, Layout } from "../../components";
+import { getSetupIntentClientSecret } from "../../helpers/getSetupIntentClientSecret";
+import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 const PaymentElementSetupIntentSample = ({ clientSecret }) => {
+  const [appearance, appearanceSelector] = useAppearanceSelector();
+
+  const options = {
+    clientSecret,
+    appearance,
+    business: { name: "Foo, LTD" },
+  };
+
   const handleSubmit = async ({ stripe, elements }) => {
     return stripe.confirmSetup({
       element: elements.getElement(PaymentElement),
@@ -15,33 +22,23 @@ const PaymentElementSetupIntentSample = ({ clientSecret }) => {
     });
   };
 
-  const options = {
-    clientSecret,
-    business: { name: "Whole Moods, Inc." },
-    appearance: {
-      rules: {},
-    },
-  };
-
   return (
-    <ElementSample
-      onSubmit={handleSubmit}
-      stripeOptions={{ betas: ["payment_element_beta_1"] }}
-      collectNameAndEmail={false}
-    >
-      <PaymentElement options={options} />
-    </ElementSample>
+    <Layout controls={appearanceSelector}>
+      <CredentialedElements
+        stripeOptions={{ betas: ["payment_element_beta_1"] }}
+      >
+        <ElementSample onSubmit={handleSubmit}>
+          <PaymentElement options={options} />
+        </ElementSample>
+      </CredentialedElements>
+    </Layout>
   );
 };
 
 export default PaymentElementSetupIntentSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(KEYS.default.secretKey, {
-    apiVersion: "2020-03-02",
-  });
-
-  const { client_secret: clientSecret } = await stripe.setupIntents.create({
+  const clientSecret = await getSetupIntentClientSecret({
     payment_method_types: ["card", "ideal", "bancontact"],
   });
 

@@ -1,10 +1,17 @@
-import Stripe from "stripe";
 import { PaymentElement } from "@stripe/react-stripe-js";
-import { ElementSample } from "../../components/ElementSample";
-import * as paymentElementThemes from "../../constants/paymentElementThemes";
-import { KEYS } from "../../constants";
+
+import { ElementSample, CredentialedElements, Layout } from "../../components";
+import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
+  const [appearance, appearanceSelector] = useAppearanceSelector();
+
+  const options = {
+    clientSecret,
+    appearance,
+  };
+
   const handleSubmit = async ({ stripe, elements }) => {
     return stripe.confirmPayment({
       element: elements.getElement(PaymentElement),
@@ -14,29 +21,23 @@ const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
     });
   };
 
-  const options = {
-    clientSecret,
-  };
-
   return (
-    <ElementSample
-      stripeOptions={{ betas: ["payment_element_beta_1"] }}
-      onSubmit={handleSubmit}
-      collectNameAndEmail={false}
-    >
-      <PaymentElement options={options} />
-    </ElementSample>
+    <Layout controls={appearanceSelector}>
+      <CredentialedElements
+        stripeOptions={{ betas: ["payment_element_beta_1"] }}
+      >
+        <ElementSample onSubmit={handleSubmit}>
+          <PaymentElement options={options} />
+        </ElementSample>
+      </CredentialedElements>
+    </Layout>
   );
 };
 
 export default PaymentElementPaymentIntentSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(KEYS.default.secretKey, {
-    apiVersion: "2020-03-02",
-  });
-
-  const { client_secret: clientSecret } = await stripe.paymentIntents.create({
+  const clientSecret = await getPaymentIntentClientSecret({
     amount: 999,
     currency: "eur",
     payment_method_types: [

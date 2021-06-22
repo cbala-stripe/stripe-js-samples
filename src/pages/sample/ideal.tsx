@@ -1,9 +1,13 @@
-import Stripe from "stripe";
 import { IdealBankElement } from "@stripe/react-stripe-js";
 
-import { ElementSample } from "../../components/ElementSample";
-import { INPUT_CLASSNAME, KEYS } from "../../constants";
-import { Field } from "../../components/Field";
+import {
+  ElementSample,
+  CredentialedElements,
+  Layout,
+  Field,
+} from "../../components";
+import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { INPUT_CLASSNAME } from "../../constants";
 
 const IdealSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, elements, name, email }) => {
@@ -20,26 +24,26 @@ const IdealSample = ({ clientSecret }) => {
   };
 
   return (
-    <ElementSample onSubmit={handleSubmit}>
-      <Field label="Bank">
-        <div className={INPUT_CLASSNAME}>
-          <IdealBankElement />
-        </div>
-      </Field>
-    </ElementSample>
+    <Layout>
+      <CredentialedElements>
+        <ElementSample collectNameAndEmail onSubmit={handleSubmit}>
+          <Field label="Bank">
+            <div className={INPUT_CLASSNAME}>
+              <IdealBankElement />
+            </div>
+          </Field>
+        </ElementSample>
+      </CredentialedElements>
+    </Layout>
   );
 };
 
 export default IdealSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(KEYS.default.secretKey, {
-    apiVersion: "2020-03-02",
-  });
-
-  const { client_secret: clientSecret } = await stripe.paymentIntents.create({
-    amount: 500,
+  const clientSecret = await getPaymentIntentClientSecret({
     currency: "eur",
+    amount: 500,
     payment_method_types: ["ideal"],
   });
 

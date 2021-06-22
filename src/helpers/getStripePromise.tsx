@@ -1,21 +1,21 @@
-import type { Stripe, StripeElements } from "@stripe/stripe-js";
+import type { Stripe } from "@stripe/stripe-js";
 import { loadStripe, StripeConstructorOptions } from "@stripe/stripe-js";
 
-import { KEYS } from "../constants";
+import { CredentialsKey, CREDENTIALS } from "../constants";
 
 const stripePromiseCache = {};
 
 export const getStripePromise = (
-  account: keyof typeof KEYS,
-  options: null | (StripeConstructorOptions & { betas: string[] })
+  credentials: CredentialsKey,
+  additionalOptions?: StripeConstructorOptions & { betas: string[] }
 ): Promise<Stripe> => {
-  const { publishableKey, stripeAccount } = KEYS[account] as {
+  const { publishableKey, stripeAccount } = CREDENTIALS[credentials] as {
     publishableKey: string;
     secretKey: string;
     stripeAccount?: string;
   };
 
-  const allOptions = { ...options, stripeAccount };
+  const allOptions = { ...additionalOptions, stripeAccount };
 
   const cacheKey = `${publishableKey} ${JSON.stringify(allOptions)}`;
 

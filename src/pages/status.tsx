@@ -1,20 +1,12 @@
 import { useEffect, useState } from "react";
-import Stripe from "stripe";
-import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  PaymentElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+import { useStripe } from "@stripe/react-stripe-js";
 
 import { useDebugElement } from "../hooks/useDebugElement";
 import { Layout } from "../components/Layout";
-import { getStripePromise } from "../helpers";
+import { CredentialedElements } from "../components/CredentialedElements";
 
 const Status = () => {
   const stripe = useStripe();
-  const elements = useElements();
   const [resultElement, setResult] = useDebugElement();
 
   useEffect(() => {
@@ -45,21 +37,23 @@ const Status = () => {
 };
 
 const StatusPage = () => {
-  const [stripePromise, setStripePromise] = useState(null);
+  const [credentials, setCredentials] = useState(null);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const account = searchParams.get("account") ?? "default";
+    const credentials = searchParams.get("credentials") ?? "default";
 
-    setStripePromise(getStripePromise(account as any, null));
+    setCredentials(credentials);
   }, []);
 
   return (
     <Layout>
       <div className="mt-6">
-        <Elements stripe={stripePromise}>
-          <Status />
-        </Elements>
+        {credentials && (
+          <CredentialedElements credentials={credentials}>
+            <Status />
+          </CredentialedElements>
+        )}
       </div>
     </Layout>
   );

@@ -1,9 +1,13 @@
-import Stripe from "stripe";
 import { CardElement } from "@stripe/react-stripe-js";
 
-import { Field } from "../../components/Field";
-import { ElementSample } from "../../components/ElementSample";
-import { INPUT_CLASSNAME, KEYS } from "../../constants";
+import {
+  ElementSample,
+  CredentialedElements,
+  Layout,
+  Field,
+} from "../../components";
+import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { INPUT_CLASSNAME } from "../../constants";
 
 const CardSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, elements }) => {
@@ -15,24 +19,24 @@ const CardSample = ({ clientSecret }) => {
   };
 
   return (
-    <ElementSample onSubmit={handleSubmit} collectNameAndEmail={false}>
-      <Field label="Card details">
-        <div className={INPUT_CLASSNAME}>
-          <CardElement />
-        </div>
-      </Field>
-    </ElementSample>
+    <Layout>
+      <CredentialedElements>
+        <ElementSample onSubmit={handleSubmit}>
+          <Field label="Card details">
+            <div className={INPUT_CLASSNAME}>
+              <CardElement />
+            </div>
+          </Field>
+        </ElementSample>
+      </CredentialedElements>
+    </Layout>
   );
 };
 
 export default CardSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(KEYS.default.secretKey, {
-    apiVersion: "2020-03-02",
-  });
-
-  const { client_secret: clientSecret } = await stripe.paymentIntents.create({
+  const clientSecret = await getPaymentIntentClientSecret({
     amount: 500,
     currency: "usd",
   });

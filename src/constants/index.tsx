@@ -13,10 +13,6 @@ export const PAGES = [
     href: "/sample/split-card",
   },
   {
-    title: "Raw Card Details",
-    href: "/sample/raw-create-payment-method",
-  },
-  {
     title: "Payment Request Button Element",
     href: "/sample/payment-request-button",
   },
@@ -53,16 +49,12 @@ export const PAGES = [
     href: "/sample/payment-element-setup-intent",
   },
   {
-    title: "Payment Element (PaymentIntent + Connect)",
+    title: "Payment Element (PaymentIntent, Connect)",
     href: "/sample/payment-element-payment-intent-connect",
-  },
-  {
-    title: "Payment Element (SetupIntent + Connect)",
-    href: "/sample/payment-element-setup-intent-connect",
   },
 ];
 
-export const KEYS = {
+export const CREDENTIALS = {
   default: {
     publishableKey: process.env.NEXT_PUBLIC_DEFAULT_PK,
     secretKey: process.env.DEFAULT_SK,
@@ -89,3 +81,5 @@ export const KEYS = {
     stripeAccount: process.env.NEXT_PUBLIC_CONNECT_CONNECTED_ACCOUNT_ID,
   },
 };
+
+export type CredentialsKey = keyof typeof CREDENTIALS;

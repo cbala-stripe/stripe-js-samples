@@ -1,12 +1,9 @@
-import Stripe from "stripe";
 import { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 
-import { Field } from "../../components/Field";
-import { ElementSample } from "../../components/ElementSample";
-import { INPUT_CLASSNAME } from "../../constants";
 import { useDebugElement } from "../../hooks/useDebugElement";
 import { Layout } from "../../components/Layout";
+import { CREDENTIALS } from "../../constants";
 
 const PaymentRequestButtonSample = ({ clientSecret }) => {
   const [ref, setRef] = useState(null);
@@ -17,7 +14,7 @@ const PaymentRequestButtonSample = ({ clientSecret }) => {
       return;
     }
 
-    loadStripe(process.env.NEXT_PUBLIC_DEFAULT_PK).then((stripe) => {
+    loadStripe(CREDENTIALS.default.publishableKey).then((stripe) => {
       const elements = stripe.elements();
 
       const paymentRequest = stripe.paymentRequest({

@@ -1,7 +1,5 @@
-import Stripe from "stripe";
-
-import { ElementSample } from "../../components/ElementSample";
-import { KEYS } from "../../constants";
+import { ElementSample, CredentialedElements, Layout } from "../../components";
+import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
 
 const KonbiniSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, name, email }) => {
@@ -22,36 +20,40 @@ const KonbiniSample = ({ clientSecret }) => {
   };
 
   return (
-    <ElementSample
-      account="konbini"
-      stripeOptions={{
-        betas: ["konbini_pm_beta_1"],
-        apiVersion: "2020-08-27; konbini_beta=v2",
-      }}
-      onSubmit={handleSubmit}
-    />
+    <Layout>
+      <CredentialedElements
+        credentials="konbini"
+        stripeOptions={{
+          betas: ["konbini_pm_beta_1"],
+          apiVersion: "2020-08-27; konbini_beta=v2",
+        }}
+      >
+        <ElementSample collectNameAndEmail onSubmit={handleSubmit} />
+      </CredentialedElements>
+    </Layout>
   );
 };
 
 export default KonbiniSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(KEYS.konbini.secretKey, {
-    // @ts-ignore
-    apiVersion: "2020-08-27; konbini_beta=v2",
-  });
-
-  const { client_secret: clientSecret } = await stripe.paymentIntents.create({
-    amount: 1099,
-    currency: "jpy",
-    payment_method_types: ["konbini"],
-    payment_method_options: {
-      // @ts-ignore
-      konbini: {
-        product_description: "Tシャツ",
+  const clientSecret = await getPaymentIntentClientSecret(
+    {
+      amount: 1099,
+      currency: "jpy",
+      payment_method_types: ["konbini"],
+      payment_method_options: {
+        // @ts-ignore
+        konbini: {
+          product_description: "Tシャツ",
+        },
       },
     },
-  });
+    {
+      credentials: "konbini",
+      apiVersion: "2020-08-27; konbini_beta=v2",
+    }
+  );
 
   return { props: { clientSecret } };
 };

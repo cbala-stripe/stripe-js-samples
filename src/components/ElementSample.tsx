@@ -1,14 +1,12 @@
 import type { FC, FormEvent } from "react";
 import { useState, useEffect } from "react";
 import type { Stripe, StripeElements } from "@stripe/stripe-js";
-import { loadStripe, StripeConstructorOptions } from "@stripe/stripe-js";
-import { Elements, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useStripe, useElements } from "@stripe/react-stripe-js";
 
 import { Button } from "./Button";
-import { Layout } from "./Layout";
+import { Field } from "./Field";
+import { Input } from "./Input";
 import { useDebugElement } from "../hooks/useDebugElement";
-import { INPUT_CLASSNAME, LABEL_CLASSNAME, KEYS } from "../constants";
-import { getStripePromise } from "../helpers";
 
 type SubmitFn = (deps: {
   stripe: Stripe;
@@ -17,10 +15,10 @@ type SubmitFn = (deps: {
   email: string;
 }) => Promise<any>;
 
-const ElementSampleInner: FC<{
+export const ElementSample: FC<{
   onSubmit: SubmitFn;
-  collectNameAndEmail: boolean;
-}> = ({ children, onSubmit, collectNameAndEmail }) => {
+  collectNameAndEmail?: boolean;
+}> = ({ onSubmit, children, collectNameAndEmail = false }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [resultElement, setResult] = useDebugElement();
@@ -50,62 +48,30 @@ const ElementSampleInner: FC<{
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="mb-6">
+    <div className="grid gap-6">
+      <form onSubmit={handleSubmit} className="grid gap-4">
         {collectNameAndEmail && (
-          <div className="mb-4">
-            <label className="block">
-              <div className={LABEL_CLASSNAME}>Name</div>
-              <input
-                className={INPUT_CLASSNAME}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                type="text"
-              />
-            </label>
-            <label className="block mt-4">
-              <div className={LABEL_CLASSNAME}>Email</div>
-              <input
-                className={INPUT_CLASSNAME}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="text"
-              />
-            </label>
-          </div>
+          <>
+            <Field label="name">
+              <Input value={name} onChange={(e) => setName(e.target.value)} />
+            </Field>
+            <Field label="Email">
+              <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+            </Field>
+          </>
         )}
-        <div className="mb-6">{children}</div>
-        <Button type="submit" onClick={handleSubmit} primary disabled={loading}>
+        <div>{children}</div>
+        <Button
+          type="submit"
+          onClick={handleSubmit}
+          primary
+          disabled={loading}
+          className="mt-2"
+        >
           Submit
         </Button>
       </form>
       {resultElement}
-    </>
-  );
-};
-
-export const ElementSample: FC<{
-  onSubmit: SubmitFn;
-  account?: keyof typeof KEYS;
-  stripeOptions?: StripeConstructorOptions & { betas: string[] };
-  collectNameAndEmail?: boolean;
-}> = ({
-  onSubmit,
-  children,
-  account = "default",
-  stripeOptions = null,
-  collectNameAndEmail = true,
-}) => {
-  return (
-    <Layout>
-      <Elements stripe={getStripePromise(account, stripeOptions)}>
-        <ElementSampleInner
-          onSubmit={onSubmit}
-          collectNameAndEmail={collectNameAndEmail}
-        >
-          {children}
-        </ElementSampleInner>
-      </Elements>
-    </Layout>
+    </div>
   );
 };

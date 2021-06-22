@@ -1,9 +1,13 @@
-import Stripe from "stripe";
 import { FpxBankElement } from "@stripe/react-stripe-js";
 
-import { ElementSample } from "../../components/ElementSample";
-import { INPUT_CLASSNAME, KEYS } from "../../constants";
-import { Field } from "../../components/Field";
+import {
+  ElementSample,
+  CredentialedElements,
+  Layout,
+  Field,
+} from "../../components";
+import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { INPUT_CLASSNAME } from "../../constants";
 
 const FpxSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, elements, name, email }) => {
@@ -15,33 +19,36 @@ const FpxSample = ({ clientSecret }) => {
           email,
         },
       },
-      return_url: `${window.location.origin}/status?account=fpx`,
+      return_url: `${window.location.origin}/status?credentials=fpx`,
     });
   };
 
   return (
-    <ElementSample onSubmit={handleSubmit} account="fpx">
-      <Field label="Bank">
-        <div className={INPUT_CLASSNAME}>
-          <FpxBankElement options={{ accountHolderType: "individual" }} />
-        </div>
-      </Field>
-    </ElementSample>
+    <Layout>
+      <CredentialedElements credentials="fpx">
+        <ElementSample collectNameAndEmail onSubmit={handleSubmit}>
+          <Field label="Bank">
+            <div className={INPUT_CLASSNAME}>
+              <FpxBankElement options={{ accountHolderType: "individual" }} />
+            </div>
+          </Field>
+        </ElementSample>
+      </CredentialedElements>
+    </Layout>
   );
 };
 
 export default FpxSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(KEYS.fpx.secretKey, {
-    apiVersion: "2020-03-02",
-  });
-
-  const { client_secret: clientSecret } = await stripe.paymentIntents.create({
-    amount: 20000,
-    currency: "myr",
-    payment_method_types: ["fpx"],
-  });
+  const clientSecret = await getPaymentIntentClientSecret(
+    {
+      amount: 20000,
+      currency: "myr",
+      payment_method_types: ["fpx"],
+    },
+    { credentials: "fpx" }
+  );
 
   return { props: { clientSecret } };
 };

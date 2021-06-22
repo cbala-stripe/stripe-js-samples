@@ -12,7 +12,7 @@ export const Button = ({
           : "bg-gray-200 hover:bg-gray-300 text-gray-800"
       } ${
         props.disabled ? "opacity-80 cursor-default" : ""
-      } py-2 px-3 rounded text-sm`}
+      } py-2 px-3 rounded text-sm w-min`}
       {...props}
     >
       {children}
