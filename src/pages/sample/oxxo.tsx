@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 
 import { ElementSample } from "../../components/ElementSample";
+import { KEYS } from "../../constants";
 
 const OxxoSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, name, email }) => {
@@ -14,18 +15,13 @@ const OxxoSample = ({ clientSecret }) => {
     });
   };
 
-  return (
-    <ElementSample
-      onSubmit={handleSubmit}
-      apiKey={process.env.NEXT_PUBLIC_OXXO_PK}
-    />
-  );
+  return <ElementSample onSubmit={handleSubmit} account="oxxo" />;
 };
 
 export default OxxoSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.OXXO_SK, {
+  const stripe = new Stripe(KEYS.oxxo.secretKey, {
     apiVersion: "2020-03-02",
   });
 

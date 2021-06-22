@@ -3,7 +3,7 @@ import { CardElement } from "@stripe/react-stripe-js";
 
 import { Field } from "../../components/Field";
 import { ElementSample } from "../../components/ElementSample";
-import { INPUT_CLASSNAME } from "../../constants";
+import { INPUT_CLASSNAME, KEYS } from "../../constants";
 
 const CardSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, elements }) => {
@@ -28,7 +28,7 @@ const CardSample = ({ clientSecret }) => {
 export default CardSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.DEFAULT_SK, {
+  const stripe = new Stripe(KEYS.default.secretKey, {
     apiVersion: "2020-03-02",
   });
 

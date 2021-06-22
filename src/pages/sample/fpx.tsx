@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { FpxBankElement } from "@stripe/react-stripe-js";
 
 import { ElementSample } from "../../components/ElementSample";
-import { INPUT_CLASSNAME } from "../../constants";
+import { INPUT_CLASSNAME, KEYS } from "../../constants";
 import { Field } from "../../components/Field";
 
 const FpxSample = ({ clientSecret }) => {
@@ -15,15 +15,12 @@ const FpxSample = ({ clientSecret }) => {
           email,
         },
       },
-      return_url: `${window.location.origin}/status?payment_method_type=fpx`,
+      return_url: `${window.location.origin}/status?account=fpx`,
     });
   };
 
   return (
-    <ElementSample
-      onSubmit={handleSubmit}
-      apiKey={process.env.NEXT_PUBLIC_FPX_PK}
-    >
+    <ElementSample onSubmit={handleSubmit} account="fpx">
       <Field label="Bank">
         <div className={INPUT_CLASSNAME}>
           <FpxBankElement options={{ accountHolderType: "individual" }} />
@@ -36,7 +33,7 @@ const FpxSample = ({ clientSecret }) => {
 export default FpxSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.FPX_SK, {
+  const stripe = new Stripe(KEYS.fpx.secretKey, {
     apiVersion: "2020-03-02",
   });
 

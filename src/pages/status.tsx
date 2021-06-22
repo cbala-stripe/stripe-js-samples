@@ -10,10 +10,7 @@ import {
 
 import { useDebugElement } from "../hooks/useDebugElement";
 import { Layout } from "../components/Layout";
-
-const API_KEY_BY_PAYMENT_METHOD_TYPE = {
-  fpx: process.env.NEXT_PUBLIC_FPX_PK,
-};
+import { getStripePromise } from "../helpers";
 
 const Status = () => {
   const stripe = useStripe();
@@ -52,12 +49,9 @@ const StatusPage = () => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
+    const account = searchParams.get("account") ?? "default";
 
-    const apiKey =
-      API_KEY_BY_PAYMENT_METHOD_TYPE[searchParams.get("payment_method_type")] ??
-      process.env.NEXT_PUBLIC_DEFAULT_PK;
-
-    setStripePromise(loadStripe(apiKey));
+    setStripePromise(getStripePromise(account as any, null));
   }, []);
 
   return (

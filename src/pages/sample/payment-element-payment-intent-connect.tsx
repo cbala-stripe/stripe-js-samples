@@ -2,13 +2,14 @@ import Stripe from "stripe";
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { ElementSample } from "../../components/ElementSample";
 import * as paymentElementThemes from "../../constants/paymentElementThemes";
+import { KEYS } from "../../constants";
 
 const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, elements }) => {
     return stripe.confirmPayment({
       element: elements.getElement(PaymentElement),
       confirmParams: {
-        return_url: `${window.location.origin}/status`,
+        return_url: `${window.location.origin}/status?account=connect`,
       },
     });
   };
@@ -21,11 +22,8 @@ const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
     <ElementSample
       onSubmit={handleSubmit}
       collectNameAndEmail={false}
-      apiKey={process.env.NEXT_PUBLIC_CONNECT_PK}
-      stripeOptions={{
-        betas: ["payment_element_beta_1"],
-        stripeAccount: process.env.NEXT_PUBLIC_CONNECT_CONNECTED_ACCOUNT_ID,
-      }}
+      account="connect"
+      stripeOptions={{ betas: ["payment_element_beta_1"] }}
     >
       <PaymentElement options={options} />
     </ElementSample>
@@ -35,7 +33,7 @@ const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
 export default PaymentElementPaymentIntentSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.CONNECT_SK, {
+  const stripe = new Stripe(KEYS.connect.secretKey, {
     apiVersion: "2020-03-02",
   });
 
@@ -54,7 +52,7 @@ export const getServerSideProps = async () => {
       ],
     },
     {
-      stripeAccount: process.env.NEXT_PUBLIC_CONNECT_CONNECTED_ACCOUNT_ID,
+      stripeAccount: KEYS.connect.stripeAccount,
     }
   );
 

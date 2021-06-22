@@ -7,7 +7,7 @@ import {
 
 import { ElementSample } from "../../components/ElementSample";
 import { Field } from "../../components/Field";
-import { INPUT_CLASSNAME } from "../../constants";
+import { INPUT_CLASSNAME, KEYS } from "../../constants";
 
 const SplitCardSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, elements }) => {
@@ -42,7 +42,7 @@ const SplitCardSample = ({ clientSecret }) => {
 export default SplitCardSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.DEFAULT_SK, {
+  const stripe = new Stripe(KEYS.default.secretKey, {
     apiVersion: "2020-03-02",
   });
 

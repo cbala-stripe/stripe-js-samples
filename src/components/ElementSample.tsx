@@ -7,7 +7,8 @@ import { Elements, useStripe, useElements } from "@stripe/react-stripe-js";
 import { Button } from "./Button";
 import { Layout } from "./Layout";
 import { useDebugElement } from "../hooks/useDebugElement";
-import { INPUT_CLASSNAME, LABEL_CLASSNAME } from "../constants";
+import { INPUT_CLASSNAME, LABEL_CLASSNAME, KEYS } from "../constants";
+import { getStripePromise } from "../helpers";
 
 type SubmitFn = (deps: {
   stripe: Stripe;
@@ -15,22 +16,6 @@ type SubmitFn = (deps: {
   name: string;
   email: string;
 }) => Promise<any>;
-
-const stripePromiseCache = {};
-
-const getStripePromise = (
-  apiKey: string,
-  options: null | (StripeConstructorOptions & { betas: string[] })
-): Promise<Stripe> => {
-  const cacheKey = `${apiKey} ${JSON.stringify(options)}`;
-
-  if (!stripePromiseCache[cacheKey]) {
-    // @ts-ignore
-    stripePromiseCache[cacheKey] = loadStripe(apiKey, options);
-  }
-
-  return stripePromiseCache[cacheKey];
-};
 
 const ElementSampleInner: FC<{
   onSubmit: SubmitFn;
@@ -101,19 +86,19 @@ const ElementSampleInner: FC<{
 
 export const ElementSample: FC<{
   onSubmit: SubmitFn;
-  apiKey?: string;
+  account?: keyof typeof KEYS;
   stripeOptions?: StripeConstructorOptions & { betas: string[] };
   collectNameAndEmail?: boolean;
 }> = ({
   onSubmit,
   children,
-  apiKey = process.env.NEXT_PUBLIC_DEFAULT_PK,
+  account = "default",
   stripeOptions = null,
   collectNameAndEmail = true,
 }) => {
   return (
     <Layout>
-      <Elements stripe={getStripePromise(apiKey, stripeOptions)}>
+      <Elements stripe={getStripePromise(account, stripeOptions)}>
         <ElementSampleInner
           onSubmit={onSubmit}
           collectNameAndEmail={collectNameAndEmail}

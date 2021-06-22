@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { PaymentElement, useElements } from "@stripe/react-stripe-js";
 
 import { ElementSample } from "../../components/ElementSample";
+import { KEYS } from "../../constants";
 
 const PaymentElementSetupIntentSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, elements }) => {
@@ -36,7 +37,7 @@ const PaymentElementSetupIntentSample = ({ clientSecret }) => {
 export default PaymentElementSetupIntentSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.DEFAULT_SK, {
+  const stripe = new Stripe(KEYS.default.secretKey, {
     apiVersion: "2020-03-02",
   });
 

@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { IbanElement } from "@stripe/react-stripe-js";
 
 import { ElementSample } from "../../components/ElementSample";
-import { INPUT_CLASSNAME } from "../../constants";
+import { INPUT_CLASSNAME, KEYS } from "../../constants";
 import { Field } from "../../components/Field";
 
 const IbanSample = ({ clientSecret }) => {
@@ -41,7 +41,7 @@ const IbanSample = ({ clientSecret }) => {
 export default IbanSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.DEFAULT_SK, {
+  const stripe = new Stripe(KEYS.default.secretKey, {
     apiVersion: "2020-03-02",
   });
 

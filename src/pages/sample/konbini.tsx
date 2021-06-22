@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 
 import { ElementSample } from "../../components/ElementSample";
+import { KEYS } from "../../constants";
 
 const KonbiniSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, name, email }) => {
@@ -22,7 +23,7 @@ const KonbiniSample = ({ clientSecret }) => {
 
   return (
     <ElementSample
-      apiKey={process.env.NEXT_PUBLIC_KONBINI_PK}
+      account="konbini"
       stripeOptions={{
         betas: ["konbini_pm_beta_1"],
         apiVersion: "2020-08-27; konbini_beta=v2",
@@ -35,7 +36,7 @@ const KonbiniSample = ({ clientSecret }) => {
 export default KonbiniSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.KONBINI_SK, {
+  const stripe = new Stripe(KEYS.konbini.secretKey, {
     // @ts-ignore
     apiVersion: "2020-08-27; konbini_beta=v2",
   });

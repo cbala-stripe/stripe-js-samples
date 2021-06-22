@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { AuBankAccountElement } from "@stripe/react-stripe-js";
 
 import { ElementSample } from "../../components/ElementSample";
-import { INPUT_CLASSNAME } from "../../constants";
+import { INPUT_CLASSNAME, KEYS } from "../../constants";
 import { Field } from "../../components/Field";
 
 const AuBankAccountSample = ({ clientSecret }) => {
@@ -19,10 +19,7 @@ const AuBankAccountSample = ({ clientSecret }) => {
   };
 
   return (
-    <ElementSample
-      onSubmit={handleSubmit}
-      apiKey={process.env.NEXT_PUBLIC_AU_BECS_DEBIT_PK}
-    >
+    <ElementSample onSubmit={handleSubmit} account="auBecs">
       <Field label="Bank">
         <div className={INPUT_CLASSNAME}>
           <AuBankAccountElement />
@@ -46,7 +43,7 @@ const AuBankAccountSample = ({ clientSecret }) => {
 export default AuBankAccountSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.AU_BECS_DEBIT_SK, {
+  const stripe = new Stripe(KEYS.auBecs.secretKey, {
     apiVersion: "2020-03-02",
   });
 

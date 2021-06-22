@@ -1,3 +1,8 @@
+export const INPUT_CLASSNAME =
+  "block border border-gray-400 py-2 px-3 mt-1 rounded text-sm w-full max-w-sm";
+
+export const LABEL_CLASSNAME = "block text-xs uppercase font-medium";
+
 export const PAGES = [
   {
     title: "Card Element",
@@ -57,12 +62,30 @@ export const PAGES = [
   },
 ];
 
-export const INPUT_CLASSNAME =
-  "block border border-gray-400 py-2 px-3 mt-1 rounded text-sm w-full max-w-sm";
-
-export const LABEL_CLASSNAME = "block text-xs uppercase font-medium";
-
-export const CURRENT_STRIPE_JS_URL =
-  typeof window !== "undefined"
-    ? window.localStorage.getItem("stripeJsUrl")
-    : "https://js.stripe.com/v3/";
+export const KEYS = {
+  default: {
+    publishableKey: process.env.NEXT_PUBLIC_DEFAULT_PK,
+    secretKey: process.env.DEFAULT_SK,
+  },
+  oxxo: {
+    publishableKey: process.env.NEXT_PUBLIC_OXXO_PK,
+    secretKey: process.env.OXXO_SK,
+  },
+  fpx: {
+    publishableKey: process.env.NEXT_PUBLIC_FPX_PK,
+    secretKey: process.env.FPX_SK,
+  },
+  auBecs: {
+    publishableKey: process.env.NEXT_PUBLIC_AU_BECS_DEBIT_PK,
+    secretKey: process.env.AU_BECS_DEBIT_SK,
+  },
+  konbini: {
+    publishableKey: process.env.NEXT_PUBLIC_KONBINI_PK,
+    secretKey: process.env.KONBINI_SK,
+  },
+  connect: {
+    publishableKey: process.env.NEXT_PUBLIC_CONNECT_PK,
+    secretKey: process.env.CONNECT_SK,
+    stripeAccount: process.env.NEXT_PUBLIC_CONNECT_CONNECTED_ACCOUNT_ID,
+  },
+};
