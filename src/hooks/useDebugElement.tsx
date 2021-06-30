@@ -9,7 +9,7 @@ export const useDebugElement = (): [JSX.Element, (response?: any) => void] => {
   }
 
   const debugElement = (
-    <pre className="text-sm">
+    <pre className="text-sm w-full overflow-scroll">
       <code>
         {typeof response === "string"
           ? response
