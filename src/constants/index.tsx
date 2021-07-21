@@ -29,6 +29,10 @@ export const PAGES = [
     href: "/sample/fpx",
   },
   {
+    title: "WeChat Pay",
+    href: "/sample/wechat-pay",
+  },
+  {
     title: "AU Bank Account Element",
     href: "/sample/au-bank-account",
   },
