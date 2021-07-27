@@ -45,16 +45,32 @@ export const PAGES = [
     href: "/sample/konbini",
   },
   {
-    title: "Payment Element (PaymentIntent)",
-    href: "/sample/payment-element-payment-intent",
+    title: "Payment Element (EUR, PaymentIntent)",
+    href: "/sample/payment-element",
   },
   {
-    title: "Payment Element (SetupIntent)",
+    title: "Payment Element (MXN, PaymentIntent)",
+    href: "/sample/payment-element-mxn",
+  },
+  {
+    title: "Payment Element (JPY, PaymentIntent)",
+    href: "/sample/payment-element-jpy",
+  },
+  {
+    title: "Payment Element (AUD, PaymentIntent)",
+    href: "/sample/payment-element-aud",
+  },
+  {
+    title: "Payment Element (USD, PaymentIntent)",
+    href: "/sample/payment-element-usd",
+  },
+  {
+    title: "Payment Element (EUR, SetupIntent)",
     href: "/sample/payment-element-setup-intent",
   },
   {
-    title: "Payment Element (PaymentIntent, Connect)",
-    href: "/sample/payment-element-payment-intent-connect",
+    title: "Payment Element (EUR, PaymentIntent, Connect)",
+    href: "/sample/payment-element-connect",
   },
 ];
 

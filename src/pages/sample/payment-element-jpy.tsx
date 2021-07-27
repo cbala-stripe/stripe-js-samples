@@ -4,7 +4,7 @@ import { ElementSample, CredentialedElements, Layout } from "../../components";
 import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
-const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
+const PaymentElementJpySample = ({ clientSecret }) => {
   const [appearance, appearanceSelector] = useAppearanceSelector();
 
   const options = {
@@ -16,7 +16,7 @@ const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
     return stripe.confirmPayment({
       element: elements.getElement(PaymentElement),
       confirmParams: {
-        return_url: `${window.location.origin}/status`,
+        return_url: `${window.location.origin}/status?credentials=konbini`,
       },
     });
   };
@@ -24,7 +24,11 @@ const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
   return (
     <Layout controls={appearanceSelector}>
       <CredentialedElements
-        stripeOptions={{ betas: ["payment_element_beta_1"] }}
+        stripeOptions={{
+          betas: ["payment_element_beta_1", "konbini_pm_beta_1"],
+          apiVersion: "2020-08-27; konbini_beta=v2",
+        }}
+        credentials="konbini"
       >
         <ElementSample onSubmit={handleSubmit}>
           <PaymentElement options={options} />
@@ -34,22 +38,26 @@ const PaymentElementPaymentIntentSample = ({ clientSecret }) => {
   );
 };
 
-export default PaymentElementPaymentIntentSample;
+export default PaymentElementJpySample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret({
-    amount: 999,
-    currency: "eur",
-    payment_method_types: [
-      "card",
-      "ideal",
-      "bancontact",
-      "eps",
-      "giropay",
-      "p24",
-      "sofort",
-    ],
-  });
+  const clientSecret = await getPaymentIntentClientSecret(
+    {
+      amount: 1099,
+      currency: "jpy",
+      payment_method_types: ["card", "konbini"],
+      payment_method_options: {
+        // @ts-ignore
+        konbini: {
+          product_description: "Tシャツ",
+        },
+      },
+    },
+    {
+      credentials: "konbini",
+      apiVersion: "2020-08-27; konbini_beta=v2",
+    }
+  );
 
   return { props: { clientSecret } };
 };

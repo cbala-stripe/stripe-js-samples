@@ -4,7 +4,7 @@ import { ElementSample, CredentialedElements, Layout } from "../../components";
 import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
-const PaymentElementPaymentIntentConnectSample = ({ clientSecret }) => {
+const PaymentElementSample = ({ clientSecret }) => {
   const [appearance, appearanceSelector] = useAppearanceSelector();
 
   const options = {
@@ -16,7 +16,7 @@ const PaymentElementPaymentIntentConnectSample = ({ clientSecret }) => {
     return stripe.confirmPayment({
       element: elements.getElement(PaymentElement),
       confirmParams: {
-        return_url: `${window.location.origin}/status?credentials=connect`,
+        return_url: `${window.location.origin}/status`,
       },
     });
   };
@@ -24,7 +24,6 @@ const PaymentElementPaymentIntentConnectSample = ({ clientSecret }) => {
   return (
     <Layout controls={appearanceSelector}>
       <CredentialedElements
-        credentials="connect"
         stripeOptions={{ betas: ["payment_element_beta_1"] }}
       >
         <ElementSample onSubmit={handleSubmit}>
@@ -35,25 +34,22 @@ const PaymentElementPaymentIntentConnectSample = ({ clientSecret }) => {
   );
 };
 
-export default PaymentElementPaymentIntentConnectSample;
+export default PaymentElementSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret(
-    {
-      amount: 999,
-      currency: "eur",
-      payment_method_types: [
-        "card",
-        "ideal",
-        "bancontact",
-        "eps",
-        "giropay",
-        "p24",
-        "sofort",
-      ],
-    },
-    { credentials: "connect" }
-  );
+  const clientSecret = await getPaymentIntentClientSecret({
+    amount: 999,
+    currency: "eur",
+    payment_method_types: [
+      "card",
+      "ideal",
+      "bancontact",
+      "eps",
+      "giropay",
+      "p24",
+      "sofort",
+    ],
+  });
 
   return { props: { clientSecret } };
 };
