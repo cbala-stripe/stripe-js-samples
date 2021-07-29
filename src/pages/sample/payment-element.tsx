@@ -1,6 +1,12 @@
+import { useState } from "react";
 import { PaymentElement } from "@stripe/react-stripe-js";
 
-import { ElementSample, CredentialedElements, Layout } from "../../components";
+import {
+  ElementSample,
+  CredentialedElements,
+  Layout,
+  List,
+} from "../../components";
 import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
@@ -10,6 +16,7 @@ const PaymentElementSample = ({ clientSecret }) => {
   const options = {
     clientSecret,
     appearance,
+    business: { name: "foo" },
   };
 
   const handleSubmit = async ({ stripe, elements }) => {
@@ -21,13 +28,29 @@ const PaymentElementSample = ({ clientSecret }) => {
     });
   };
 
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+  const handleChange = (e: any) => {
+    setSelectedPaymentMethod(e.value.type);
+  };
+
   return (
     <Layout controls={appearanceSelector}>
       <CredentialedElements
         stripeOptions={{ betas: ["payment_element_beta_1"] }}
       >
         <ElementSample onSubmit={handleSubmit}>
-          <PaymentElement options={options} />
+          {selectedPaymentMethod === "sepa_debit" && (
+            <List>
+              <List.Item>
+                Test success IBAN: <code>AT61 1904 3002 3457 3201</code>
+              </List.Item>
+              <List.Item>
+                Test failure IBAN: <code>AT86 1904 3002 3547 3202</code>
+              </List.Item>
+            </List>
+          )}
+          {/* @ts-ignore */}
+          <PaymentElement options={options} onChange={handleChange} />
         </ElementSample>
       </CredentialedElements>
     </Layout>
@@ -48,6 +71,7 @@ export const getServerSideProps = async () => {
       "giropay",
       "p24",
       "sofort",
+      "sepa_debit",
     ],
   });
 

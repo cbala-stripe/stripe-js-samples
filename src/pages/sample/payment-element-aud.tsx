@@ -1,6 +1,12 @@
+import { useState } from "react";
 import { PaymentElement } from "@stripe/react-stripe-js";
 
-import { ElementSample, CredentialedElements, Layout } from "../../components";
+import {
+  ElementSample,
+  CredentialedElements,
+  Layout,
+  List,
+} from "../../components";
 import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
@@ -22,6 +28,11 @@ const PaymentElementAudSample = ({ clientSecret }) => {
     });
   };
 
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+  const handleChange = (e: any) => {
+    setSelectedPaymentMethod(e.value.type);
+  };
+
   return (
     <Layout controls={appearanceSelector}>
       <CredentialedElements
@@ -29,18 +40,21 @@ const PaymentElementAudSample = ({ clientSecret }) => {
         stripeOptions={{ betas: ["payment_element_beta_1"] }}
       >
         <ElementSample onSubmit={handleSubmit}>
-          <ul className="text-sm mb-6 list-disc list-inside">
-            <li>
-              Test BSB number: <code>000-000</code>
-            </li>
-            <li>
-              Test success account number: <code>000123456</code>
-            </li>
-            <li>
-              Test failure account number: <code>111111113</code>
-            </li>
-          </ul>
-          <PaymentElement options={options} />
+          {selectedPaymentMethod === "au_becs_debit" && (
+            <List>
+              <List.Item>
+                Test BSB number: <code>000-000</code>
+              </List.Item>
+              <List.Item>
+                Test success account number: <code>000123456</code>
+              </List.Item>
+              <List.Item>
+                Test failure account number: <code>111111113</code>
+              </List.Item>
+            </List>
+          )}
+          {/* @ts-ignore */}
+          <PaymentElement options={options} onChange={handleChange} />
         </ElementSample>
       </CredentialedElements>
     </Layout>

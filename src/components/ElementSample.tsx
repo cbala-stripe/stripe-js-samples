@@ -60,14 +60,8 @@ export const ElementSample: FC<{
             </Field>
           </>
         )}
-        <div>{children}</div>
-        <Button
-          type="submit"
-          onClick={handleSubmit}
-          primary
-          disabled={loading}
-          className="mt-2"
-        >
+        <div className="grid gap-4">{children}</div>
+        <Button type="submit" onClick={handleSubmit} primary disabled={loading}>
           Submit
         </Button>
       </form>
