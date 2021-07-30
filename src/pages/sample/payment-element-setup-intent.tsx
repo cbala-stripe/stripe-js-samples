@@ -1,6 +1,12 @@
+import { useState } from "react";
 import { PaymentElement } from "@stripe/react-stripe-js";
 
-import { ElementSample, CredentialedElements, Layout } from "../../components";
+import {
+  ElementSample,
+  CredentialedElements,
+  Layout,
+  TestInstructions,
+} from "../../components";
 import { getSetupIntentClientSecret } from "../../helpers/getSetupIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
@@ -22,13 +28,20 @@ const PaymentElementSetupIntentSample = ({ clientSecret }) => {
     });
   };
 
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+  const handleChange = (e: any) => {
+    setSelectedPaymentMethod(e.value.type);
+  };
+
   return (
     <Layout controls={appearanceSelector}>
       <CredentialedElements
         stripeOptions={{ betas: ["payment_element_beta_1"] }}
       >
         <ElementSample onSubmit={handleSubmit}>
-          <PaymentElement options={options} />
+          <TestInstructions paymentMethod={selectedPaymentMethod} />
+          {/* @ts-ignore */}
+          <PaymentElement options={options} onChange={handleChange} />
         </ElementSample>
       </CredentialedElements>
     </Layout>
@@ -39,7 +52,7 @@ export default PaymentElementSetupIntentSample;
 
 export const getServerSideProps = async () => {
   const clientSecret = await getSetupIntentClientSecret({
-    payment_method_types: ["card", "ideal", "bancontact"],
+    payment_method_types: ["card", "ideal", "bancontact", "sepa_debit"],
   });
 
   return { props: { clientSecret } };

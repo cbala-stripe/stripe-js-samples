@@ -5,6 +5,7 @@ import {
   CredentialedElements,
   Layout,
   Field,
+  TestInstructions,
 } from "../../components";
 import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
 import { INPUT_CLASSNAME } from "../../constants";
@@ -31,17 +32,7 @@ const AuBankAccountSample = ({ clientSecret }) => {
               <AuBankAccountElement />
             </div>
           </Field>
-          <ul className="text-sm mt-4 list-disc list-inside">
-            <li>
-              Test BSB number: <code>000-000</code>
-            </li>
-            <li>
-              Test success account number: <code>000123456</code>
-            </li>
-            <li>
-              Test failure account number: <code>111111113</code>
-            </li>
-          </ul>
+          <TestInstructions paymentMethod="au_becs_debit" />
         </ElementSample>
       </CredentialedElements>
     </Layout>

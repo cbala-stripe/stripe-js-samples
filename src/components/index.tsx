@@ -6,3 +6,4 @@ export * from "./Layout";
 export * from "./ElementSample";
 export * from "./CredentialedElements";
 export * from "./List";
+export * from "./TestInstructions";

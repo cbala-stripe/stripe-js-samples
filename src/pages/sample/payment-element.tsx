@@ -5,7 +5,7 @@ import {
   ElementSample,
   CredentialedElements,
   Layout,
-  List,
+  TestInstructions,
 } from "../../components";
 import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
@@ -39,16 +39,7 @@ const PaymentElementSample = ({ clientSecret }) => {
         stripeOptions={{ betas: ["payment_element_beta_1"] }}
       >
         <ElementSample onSubmit={handleSubmit}>
-          {selectedPaymentMethod === "sepa_debit" && (
-            <List>
-              <List.Item>
-                Test success IBAN: <code>AT61 1904 3002 3457 3201</code>
-              </List.Item>
-              <List.Item>
-                Test failure IBAN: <code>AT86 1904 3002 3547 3202</code>
-              </List.Item>
-            </List>
-          )}
+          <TestInstructions paymentMethod={selectedPaymentMethod} />
           {/* @ts-ignore */}
           <PaymentElement options={options} onChange={handleChange} />
         </ElementSample>

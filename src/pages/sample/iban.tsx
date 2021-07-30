@@ -5,7 +5,7 @@ import {
   CredentialedElements,
   Layout,
   Field,
-  List,
+  TestInstructions,
 } from "../../components";
 import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
 import { INPUT_CLASSNAME } from "../../constants";
@@ -33,14 +33,7 @@ const IbanSample = ({ clientSecret }) => {
               <IbanElement options={{ supportedCountries: ["SEPA"] }} />
             </div>
           </Field>
-          <List>
-            <List.Item>
-              Test success IBAN: <code>AT61 1904 3002 3457 3201</code>
-            </List.Item>
-            <List.Item>
-              Test failure IBAN: <code>AT86 1904 3002 3547 3202</code>
-            </List.Item>
-          </List>
+          <TestInstructions paymentMethod="sepa_debit" />
         </ElementSample>
       </CredentialedElements>
     </Layout>

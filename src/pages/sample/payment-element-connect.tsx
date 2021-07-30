@@ -1,6 +1,12 @@
+import { useState } from "react";
 import { PaymentElement } from "@stripe/react-stripe-js";
 
-import { ElementSample, CredentialedElements, Layout } from "../../components";
+import {
+  ElementSample,
+  CredentialedElements,
+  Layout,
+  TestInstructions,
+} from "../../components";
 import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
@@ -10,6 +16,9 @@ const PaymentElementConnectSample = ({ clientSecret }) => {
   const options = {
     clientSecret,
     appearance,
+    business: {
+      name: "Foo",
+    },
   };
 
   const handleSubmit = async ({ stripe, elements }) => {
@@ -21,6 +30,11 @@ const PaymentElementConnectSample = ({ clientSecret }) => {
     });
   };
 
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+  const handleChange = (e: any) => {
+    setSelectedPaymentMethod(e.value.type);
+  };
+
   return (
     <Layout controls={appearanceSelector}>
       <CredentialedElements
@@ -28,7 +42,9 @@ const PaymentElementConnectSample = ({ clientSecret }) => {
         stripeOptions={{ betas: ["payment_element_beta_1"] }}
       >
         <ElementSample onSubmit={handleSubmit}>
-          <PaymentElement options={options} />
+          <TestInstructions paymentMethod={selectedPaymentMethod} />
+          {/* @ts-ignore */}
+          <PaymentElement options={options} onChange={handleChange} />
         </ElementSample>
       </CredentialedElements>
     </Layout>
@@ -50,6 +66,7 @@ export const getServerSideProps = async () => {
         "giropay",
         "p24",
         "sofort",
+        "sepa_debit",
       ],
     },
     { credentials: "connect" }
