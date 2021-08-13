@@ -17,6 +17,17 @@ const PaymentElementSample = ({ clientSecret }) => {
       element: elements.getElement(PaymentElement),
       confirmParams: {
         return_url: `${window.location.origin}/status`,
+        shipping: {
+          name: "Jenny Rosen",
+          address: {
+            city: "San Francisco",
+            country: "US",
+            line1: "510 Townsend Street",
+            line2: null,
+            postal_code: "94103",
+            state: "CA",
+          },
+        },
       },
     });
   };
