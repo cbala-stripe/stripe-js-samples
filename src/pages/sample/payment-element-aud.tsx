@@ -16,7 +16,6 @@ const PaymentElementAudSample = ({ clientSecret }) => {
   const options = {
     clientSecret,
     appearance,
-    business: { name: "Test Name, LLC" },
   };
 
   const handleSubmit = async ({ stripe, elements }) => {

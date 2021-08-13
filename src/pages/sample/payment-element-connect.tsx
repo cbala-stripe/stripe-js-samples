@@ -16,9 +16,6 @@ const PaymentElementConnectSample = ({ clientSecret }) => {
   const options = {
     clientSecret,
     appearance,
-    business: {
-      name: "Foo",
-    },
   };
 
   const handleSubmit = async ({ stripe, elements }) => {
@@ -59,14 +56,14 @@ export const getServerSideProps = async () => {
       amount: 999,
       currency: "eur",
       payment_method_types: [
-        "card",
-        "ideal",
         "bancontact",
+        "card",
         "eps",
         "giropay",
+        "ideal",
         "p24",
-        "sofort",
         "sepa_debit",
+        "sofort",
       ],
     },
     { credentials: "connect" }

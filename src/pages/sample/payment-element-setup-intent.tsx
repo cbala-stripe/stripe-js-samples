@@ -16,7 +16,6 @@ const PaymentElementSetupIntentSample = ({ clientSecret }) => {
   const options = {
     clientSecret,
     appearance,
-    business: { name: "Foo, LTD" },
   };
 
   const handleSubmit = async ({ stripe, elements }) => {
@@ -52,7 +51,13 @@ export default PaymentElementSetupIntentSample;
 
 export const getServerSideProps = async () => {
   const clientSecret = await getSetupIntentClientSecret({
-    payment_method_types: ["card", "ideal", "bancontact", "sepa_debit"],
+    payment_method_types: [
+      "bancontact",
+      "card",
+      "ideal",
+      "sepa_debit",
+      "sofort",
+    ],
   });
 
   return { props: { clientSecret } };
