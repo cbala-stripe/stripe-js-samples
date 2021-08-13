@@ -49,6 +49,14 @@ export const PAGES = [
     href: "/sample/payment-element",
   },
   {
+    title: "Payment Element (EUR, PaymentIntent, Connect)",
+    href: "/sample/payment-element-connect",
+  },
+  {
+    title: "Payment Element (EUR, SetupIntent)",
+    href: "/sample/payment-element-setup-intent",
+  },
+  {
     title: "Payment Element (MXN, PaymentIntent)",
     href: "/sample/payment-element-mxn",
   },
@@ -61,16 +69,12 @@ export const PAGES = [
     href: "/sample/payment-element-aud",
   },
   {
+    title: "Payment Element (AUD, SetupIntent)",
+    href: "/sample/payment-element-aud-setup-intent",
+  },
+  {
     title: "Payment Element (USD, PaymentIntent)",
     href: "/sample/payment-element-usd",
-  },
-  {
-    title: "Payment Element (EUR, SetupIntent)",
-    href: "/sample/payment-element-setup-intent",
-  },
-  {
-    title: "Payment Element (EUR, PaymentIntent, Connect)",
-    href: "/sample/payment-element-connect",
   },
 ];
 
