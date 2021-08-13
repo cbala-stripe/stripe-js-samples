@@ -8,6 +8,7 @@ const App = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src={stripeJsUrl}></script>
       </Head>
       <Component {...pageProps} />

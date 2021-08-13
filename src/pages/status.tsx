@@ -31,7 +31,7 @@ const Status = () => {
     } else {
       throw new Error("Expected client secret query parameter but found none");
     }
-  }, [stripe]);
+  }, [stripe, setResult]);
 
   return resultElement;
 };

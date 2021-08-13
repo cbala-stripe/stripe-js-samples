@@ -46,7 +46,7 @@ const PaymentRequestButtonSample = ({ clientSecret }) => {
         setResult(e);
       });
     });
-  }, [ref]);
+  }, [ref, setResult]);
 
   return (
     <Layout>
