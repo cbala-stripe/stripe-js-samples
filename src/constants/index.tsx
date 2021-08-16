@@ -76,6 +76,10 @@ export const PAGES = [
     title: "Payment Element (USD, PaymentIntent)",
     href: "/sample/payment-element-usd",
   },
+  {
+    title: "Payment Element (EUR, PaymentIntent, beta_2)",
+    href: "/sample/payment-element-beta-2",
+  },
 ];
 
 export const CREDENTIALS = {
