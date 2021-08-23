@@ -22,7 +22,7 @@ const PaymentElementSample = ({ clientSecret }) => {
     return stripe.confirmPayment({
       element: elements.getElement(PaymentElement),
       confirmParams: {
-        return_url: `${window.location.origin}/status`,
+        return_url: `${window.location.origin}/status?credentials=paypal`,
       },
     });
   };
@@ -35,7 +35,10 @@ const PaymentElementSample = ({ clientSecret }) => {
   return (
     <Layout controls={appearanceSelector}>
       <CredentialedElements
-        stripeOptions={{ betas: ["payment_element_beta_1"] }}
+        credentials="paypal"
+        stripeOptions={{
+          betas: ["payment_element_beta_1"],
+        }}
       >
         <ElementSample onSubmit={handleSubmit}>
           <TestInstructions paymentMethod={selectedPaymentMethod} />
@@ -50,20 +53,26 @@ const PaymentElementSample = ({ clientSecret }) => {
 export default PaymentElementSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret({
-    amount: 999,
-    currency: "eur",
-    payment_method_types: [
-      "bancontact",
-      "card",
-      "eps",
-      "giropay",
-      "ideal",
-      "p24",
-      "sepa_debit",
-      "sofort",
-    ],
-  });
+  const clientSecret = await getPaymentIntentClientSecret(
+    {
+      amount: 999,
+      currency: "eur",
+      payment_method_types: [
+        "bancontact",
+        "card",
+        "eps",
+        "giropay",
+        "ideal",
+        "p24",
+        "sepa_debit",
+        "sofort",
+        "paypal",
+      ],
+    },
+    {
+      credentials: "paypal",
+    }
+  );
 
   return { props: { clientSecret } };
 };

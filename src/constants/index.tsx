@@ -103,10 +103,18 @@ export const CREDENTIALS = {
     publishableKey: process.env.NEXT_PUBLIC_KONBINI_PK,
     secretKey: process.env.KONBINI_SK,
   },
+  usBankAccount: {
+    publishableKey: process.env.NEXT_PUBLIC_US_BANK_ACCOUNT_PK,
+    secretKey: process.env.US_BANK_ACCOUNT_SK,
+  },
   connect: {
     publishableKey: process.env.NEXT_PUBLIC_CONNECT_PK,
     secretKey: process.env.CONNECT_SK,
     stripeAccount: process.env.NEXT_PUBLIC_CONNECT_CONNECTED_ACCOUNT_ID,
+  },
+  paypal: {
+    publishableKey: process.env.NEXT_PUBLIC_PAYPAL_PK,
+    secretKey: process.env.PAYPAL_SK,
   },
 };
 

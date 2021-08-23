@@ -7,6 +7,7 @@ export const getPaymentIntentClientSecret = async (
   options?: {
     credentials?: CredentialsKey;
     apiVersion?: string;
+    includeCustomer?: boolean;
   }
 ) => {
   const apiVersion = options?.apiVersion ?? "2020-03-02";
@@ -19,6 +20,11 @@ export const getPaymentIntentClientSecret = async (
     // @ts-ignore
     apiVersion,
   });
+
+  if (options?.includeCustomer) {
+    const { id } = await stripe.customers.create();
+    intentFields = { ...intentFields, customer: id };
+  }
 
   const { client_secret: clientSecret } = await stripe.paymentIntents.create(
     intentFields,
