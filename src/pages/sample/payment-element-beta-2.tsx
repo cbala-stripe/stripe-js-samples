@@ -11,7 +11,8 @@ import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClie
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 const PaymentElementBeta2Sample = ({ clientSecret }) => {
-  const [appearance, appearanceSelector] = useAppearanceSelector();
+  const [appearance, appearanceSelector, fonts] =
+    useAppearanceSelector("VT323");
 
   const handleSubmit = async ({ stripe, elements }) => {
     return stripe.confirmPayment({
@@ -31,7 +32,7 @@ const PaymentElementBeta2Sample = ({ clientSecret }) => {
     <Layout controls={appearanceSelector}>
       <CredentialedElements
         stripeOptions={{ betas: ["payment_element_beta_2"] }}
-        options={{ clientSecret, appearance } as any}
+        options={{ clientSecret, appearance, fonts } as any}
       >
         <ElementSample onSubmit={handleSubmit}>
           <TestInstructions paymentMethod={selectedPaymentMethod} />

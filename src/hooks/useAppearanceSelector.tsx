@@ -1,48 +1,21 @@
 import { useState, useLayoutEffect } from "react";
 
 import { Field, Select } from "../components";
-import * as paymentElementThemes from "../constants/paymentElementThemes";
+import { PAYMENT_ELEMENT_THEMES } from "../constants";
 
-const THEMES = [
-  {
-    label: "None",
-    value: "None",
-    theme: { backgroundColor: "#fff", appearance: {} },
-  },
-  {
-    label: "Stripe",
-    value: "Stripe",
-    theme: paymentElementThemes.STRIPE,
-  },
-  {
-    label: "Bubblegum",
-    value: "Bubblegum",
-    theme: paymentElementThemes.BUBBLEGUM,
-  },
-  {
-    label: "Dark",
-    value: "Dark",
-    theme: paymentElementThemes.DARK,
-  },
-  {
-    label: "Minimal",
-    value: "Minimal",
-    theme: paymentElementThemes.MINIMAL,
-  },
-  {
-    label: "98",
-    value: "98",
-    theme: paymentElementThemes.WINDOWS,
-  },
-];
+const OPTIONS = PAYMENT_ELEMENT_THEMES.map((theme) => ({
+  ...theme,
+  value: theme.label,
+}));
 
-export const useAppearanceSelector = (): [Record<string, any>, JSX.Element] => {
-  const [theme, setTheme] = useState("None");
+export const useAppearanceSelector = (
+  initialTheme: string = "None"
+): [Record<string, any>, JSX.Element, Record<string, string>[]] => {
+  const [theme, setTheme] = useState(initialTheme);
 
-  const {
-    // @ts-ignore
-    theme: { backgroundColor, appearance },
-  } = THEMES.find((t) => t.value === theme);
+  const { backgroundColor, appearance, fonts } = OPTIONS.find(
+    (t) => t.value === theme
+  );
 
   useLayoutEffect(() => {
     document.body.style.backgroundColor = backgroundColor;
@@ -54,9 +27,9 @@ export const useAppearanceSelector = (): [Record<string, any>, JSX.Element] => {
 
   const appearanceSelector = (
     <Field label="Theme">
-      <Select value={theme} onChange={setTheme} options={THEMES} />
+      <Select value={theme} onChange={setTheme} options={OPTIONS} />
     </Field>
   );
 
-  return [appearance, appearanceSelector];
+  return [appearance, appearanceSelector, fonts];
 };

@@ -119,3 +119,5 @@ export const CREDENTIALS = {
 };
 
 export type CredentialsKey = keyof typeof CREDENTIALS;
+
+export { PAYMENT_ELEMENT_THEMES } from "./paymentElementThemes";
