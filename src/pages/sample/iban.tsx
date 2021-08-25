@@ -7,7 +7,7 @@ import {
   Field,
   TestInstructions,
 } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { INPUT_CLASSNAME } from "../../constants";
 
 const IbanSample = ({ clientSecret }) => {
@@ -43,7 +43,7 @@ const IbanSample = ({ clientSecret }) => {
 export default IbanSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret({
+  const clientSecret = await getIntentClientSecret("payment", {
     amount: 500,
     currency: "eur",
     payment_method_types: ["sepa_debit"],

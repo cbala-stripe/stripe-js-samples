@@ -7,7 +7,7 @@ import {
   Field,
   TestInstructions,
 } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { INPUT_CLASSNAME } from "../../constants";
 
 const AuBankAccountSample = ({ clientSecret }) => {
@@ -42,7 +42,8 @@ const AuBankAccountSample = ({ clientSecret }) => {
 export default AuBankAccountSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret(
+  const clientSecret = await getIntentClientSecret(
+    "payment",
     {
       amount: 1099,
       currency: "aud",

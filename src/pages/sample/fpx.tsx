@@ -6,7 +6,7 @@ import {
   Layout,
   Field,
 } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { INPUT_CLASSNAME } from "../../constants";
 
 const FpxSample = ({ clientSecret }) => {
@@ -41,7 +41,8 @@ const FpxSample = ({ clientSecret }) => {
 export default FpxSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret(
+  const clientSecret = await getIntentClientSecret(
+    "payment",
     {
       amount: 20000,
       currency: "myr",

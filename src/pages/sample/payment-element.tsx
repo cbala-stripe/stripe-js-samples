@@ -7,7 +7,7 @@ import {
   Layout,
   TestInstructions,
 } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 const PaymentElementSample = ({ clientSecret }) => {
@@ -53,7 +53,8 @@ const PaymentElementSample = ({ clientSecret }) => {
 export default PaymentElementSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret(
+  const clientSecret = await getIntentClientSecret(
+    "payment",
     {
       amount: 999,
       currency: "eur",

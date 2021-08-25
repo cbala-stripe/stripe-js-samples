@@ -6,8 +6,8 @@
     "dev": "next dev -p 3005",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "rebase-deploy-branches": "git checkout edge && git rebase main && git push -f && git checkout prod && git rebase main && git push -f && git checkout main"
+    "typecheck": "tsc",
+    "lint": "next lint"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^1.4.1",

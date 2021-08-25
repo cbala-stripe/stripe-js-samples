@@ -6,7 +6,7 @@ import {
   Layout,
   Field,
 } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { INPUT_CLASSNAME } from "../../constants";
 
 const IdealSample = ({ clientSecret }) => {
@@ -41,7 +41,7 @@ const IdealSample = ({ clientSecret }) => {
 export default IdealSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret({
+  const clientSecret = await getIntentClientSecret("payment", {
     currency: "eur",
     amount: 500,
     payment_method_types: ["ideal"],

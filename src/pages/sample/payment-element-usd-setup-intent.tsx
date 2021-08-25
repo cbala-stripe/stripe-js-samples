@@ -1,7 +1,7 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
 
 import { ElementSample, CredentialedElements, Layout } from "../../components";
-import { getSetupIntentClientSecret } from "../../helpers/getSetupIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 const PaymentElementUsdSetupIntentSample = ({ clientSecret }) => {
@@ -27,7 +27,6 @@ const PaymentElementUsdSetupIntentSample = ({ clientSecret }) => {
         credentials="usBankAccount"
         stripeOptions={{
           betas: ["payment_element_beta_1"],
-          apiVersion: "2020-08-27; us_bank_account_beta=v1",
         }}
       >
         <ElementSample onSubmit={handleSubmit}>
@@ -41,13 +40,13 @@ const PaymentElementUsdSetupIntentSample = ({ clientSecret }) => {
 export default PaymentElementUsdSetupIntentSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getSetupIntentClientSecret(
+  const clientSecret = await getIntentClientSecret(
+    "setup",
     {
       payment_method_types: ["card", "us_bank_account"],
     },
     {
       credentials: "usBankAccount",
-      apiVersion: "2020-08-27; us_bank_account_beta=v1",
       includeCustomer: true,
     }
   );

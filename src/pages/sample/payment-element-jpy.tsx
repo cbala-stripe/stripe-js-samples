@@ -1,7 +1,7 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
 
 import { ElementSample, CredentialedElements, Layout } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 const PaymentElementJpySample = ({ clientSecret }) => {
@@ -26,7 +26,6 @@ const PaymentElementJpySample = ({ clientSecret }) => {
       <CredentialedElements
         stripeOptions={{
           betas: ["payment_element_beta_1", "konbini_pm_beta_1"],
-          apiVersion: "2020-08-27; konbini_beta=v2",
         }}
         credentials="konbini"
       >
@@ -41,13 +40,14 @@ const PaymentElementJpySample = ({ clientSecret }) => {
 export default PaymentElementJpySample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret(
+  const clientSecret = await getIntentClientSecret(
+    "payment",
     {
       amount: 1099,
       currency: "jpy",
       payment_method_types: ["card", "konbini"],
       payment_method_options: {
-        // @ts-ignore
+        // @ts-ignore: Konbini not in types yet
         konbini: {
           product_description: "Tシャツ",
         },
@@ -55,7 +55,6 @@ export const getServerSideProps = async () => {
     },
     {
       credentials: "konbini",
-      apiVersion: "2020-08-27; konbini_beta=v2",
     }
   );
 

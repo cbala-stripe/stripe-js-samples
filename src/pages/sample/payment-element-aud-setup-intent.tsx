@@ -7,7 +7,7 @@ import {
   Layout,
   TestInstructions,
 } from "../../components";
-import { getSetupIntentClientSecret } from "../../helpers/getSetupIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 const PaymentElementAudSetupIntentSample = ({ clientSecret }) => {
@@ -51,7 +51,8 @@ const PaymentElementAudSetupIntentSample = ({ clientSecret }) => {
 export default PaymentElementAudSetupIntentSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getSetupIntentClientSecret(
+  const clientSecret = await getIntentClientSecret(
+    "setup",
     {
       payment_method_types: ["card", "au_becs_debit"],
     },

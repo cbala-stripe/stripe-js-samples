@@ -6,16 +6,22 @@ import { CredentialsKey, CREDENTIALS } from "../constants";
 const stripePromiseCache = {};
 
 export const getStripePromise = (
-  credentials: CredentialsKey,
+  credentialsKey: CredentialsKey,
   additionalOptions?: StripeConstructorOptions & { betas: string[] }
 ): Promise<Stripe> => {
-  const { publishableKey, stripeAccount } = CREDENTIALS[credentials] as {
+  const { publishableKey, stripeAccount, apiVersion } = CREDENTIALS[
+    credentialsKey
+  ] as {
     publishableKey: string;
-    secretKey: string;
     stripeAccount?: string;
+    apiVersion?: string;
   };
 
-  const allOptions = { ...additionalOptions, stripeAccount };
+  const allOptions = {
+    stripeAccount,
+    apiVersion,
+    ...additionalOptions,
+  };
 
   const cacheKey = `${publishableKey} ${JSON.stringify(allOptions)}`;
 

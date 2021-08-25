@@ -1,5 +1,5 @@
 import { ElementSample, CredentialedElements, Layout } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 
 const WechatPaySample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, elements, name, email }) => {
@@ -24,7 +24,7 @@ const WechatPaySample = ({ clientSecret }) => {
 export default WechatPaySample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret({
+  const clientSecret = await getIntentClientSecret("payment", {
     currency: "usd",
     amount: 1099,
     payment_method_types: ["wechat_pay"],

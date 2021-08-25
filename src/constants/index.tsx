@@ -106,10 +106,12 @@ export const CREDENTIALS = {
   konbini: {
     publishableKey: process.env.NEXT_PUBLIC_KONBINI_PK,
     secretKey: process.env.KONBINI_SK,
+    apiVersion: "2020-08-27; konbini_beta=v2",
   },
   usBankAccount: {
     publishableKey: process.env.NEXT_PUBLIC_US_BANK_ACCOUNT_PK,
     secretKey: process.env.US_BANK_ACCOUNT_SK,
+    apiVersion: "2020-08-27; us_bank_account_beta=v1",
   },
   connect: {
     publishableKey: process.env.NEXT_PUBLIC_CONNECT_PK,

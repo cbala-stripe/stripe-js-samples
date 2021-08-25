@@ -10,7 +10,7 @@ import {
   Layout,
   Field,
 } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { INPUT_CLASSNAME } from "../../constants";
 
 const SplitCardSample = ({ clientSecret }) => {
@@ -49,7 +49,7 @@ const SplitCardSample = ({ clientSecret }) => {
 export default SplitCardSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret({
+  const clientSecret = await getIntentClientSecret("payment", {
     amount: 500,
     currency: "usd",
   });

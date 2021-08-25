@@ -1,5 +1,5 @@
 import { ElementSample, CredentialedElements, Layout } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 
 const OxxoSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, name, email }) => {
@@ -25,7 +25,8 @@ const OxxoSample = ({ clientSecret }) => {
 export default OxxoSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret(
+  const clientSecret = await getIntentClientSecret(
+    "payment",
     {
       amount: 10000,
       currency: "mxn",

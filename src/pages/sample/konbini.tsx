@@ -1,5 +1,5 @@
 import { ElementSample, CredentialedElements, Layout } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 
 const KonbiniSample = ({ clientSecret }) => {
   const handleSubmit = async ({ stripe, name, email }) => {
@@ -25,7 +25,6 @@ const KonbiniSample = ({ clientSecret }) => {
         credentials="konbini"
         stripeOptions={{
           betas: ["konbini_pm_beta_1"],
-          apiVersion: "2020-08-27; konbini_beta=v2",
         }}
       >
         <ElementSample collectNameAndEmail onSubmit={handleSubmit} />
@@ -37,7 +36,8 @@ const KonbiniSample = ({ clientSecret }) => {
 export default KonbiniSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret(
+  const clientSecret = await getIntentClientSecret(
+    "payment",
     {
       amount: 1099,
       currency: "jpy",
@@ -51,7 +51,6 @@ export const getServerSideProps = async () => {
     },
     {
       credentials: "konbini",
-      apiVersion: "2020-08-27; konbini_beta=v2",
     }
   );
 

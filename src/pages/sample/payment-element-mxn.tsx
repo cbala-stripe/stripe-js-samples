@@ -1,7 +1,7 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
 
 import { ElementSample, CredentialedElements, Layout } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 const PaymentElementMxnSample = ({ clientSecret }) => {
@@ -38,7 +38,8 @@ const PaymentElementMxnSample = ({ clientSecret }) => {
 export default PaymentElementMxnSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret(
+  const clientSecret = await getIntentClientSecret(
+    "payment",
     {
       amount: 10000,
       currency: "mxn",
