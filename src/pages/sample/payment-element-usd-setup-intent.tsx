@@ -1,10 +1,10 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
 
 import { ElementSample, CredentialedElements, Layout } from "../../components";
-import { getPaymentIntentClientSecret } from "../../helpers/getPaymentIntentClientSecret";
+import { getSetupIntentClientSecret } from "../../helpers/getSetupIntentClientSecret";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
-const PaymentElementUsdSample = ({ clientSecret }) => {
+const PaymentElementUsdSetupIntentSample = ({ clientSecret }) => {
   const [appearance, appearanceSelector] = useAppearanceSelector();
 
   const options = {
@@ -13,21 +13,10 @@ const PaymentElementUsdSample = ({ clientSecret }) => {
   };
 
   const handleSubmit = async ({ stripe, elements }) => {
-    return stripe.confirmPayment({
+    return stripe.confirmSetup({
       element: elements.getElement(PaymentElement),
       confirmParams: {
         return_url: `${window.location.origin}/status?credentials=usBankAccount`,
-        shipping: {
-          name: "Jenny Rosen",
-          address: {
-            city: "San Francisco",
-            country: "US",
-            line1: "510 Townsend Street",
-            line2: null,
-            postal_code: "94103",
-            state: "CA",
-          },
-        },
       },
     });
   };
@@ -36,7 +25,10 @@ const PaymentElementUsdSample = ({ clientSecret }) => {
     <Layout controls={appearanceSelector}>
       <CredentialedElements
         credentials="usBankAccount"
-        stripeOptions={{ betas: ["payment_element_beta_1"] }}
+        stripeOptions={{
+          betas: ["payment_element_beta_1"],
+          apiVersion: "2020-08-27; us_bank_account_beta=v1",
+        }}
       >
         <ElementSample onSubmit={handleSubmit}>
           <PaymentElement options={options} />
@@ -46,19 +38,12 @@ const PaymentElementUsdSample = ({ clientSecret }) => {
   );
 };
 
-export default PaymentElementUsdSample;
+export default PaymentElementUsdSetupIntentSample;
 
 export const getServerSideProps = async () => {
-  const clientSecret = await getPaymentIntentClientSecret(
+  const clientSecret = await getSetupIntentClientSecret(
     {
-      amount: 999,
-      currency: "usd",
-      payment_method_types: [
-        "card",
-        "afterpay_clearpay",
-        "alipay",
-        "us_bank_account",
-      ],
+      payment_method_types: ["card", "us_bank_account"],
     },
     {
       credentials: "usBankAccount",
