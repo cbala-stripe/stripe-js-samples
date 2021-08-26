@@ -13,10 +13,13 @@ export const CredentialedElements: FC<{
   stripeOptions?: StripeConstructorOptions & { betas: string[] };
   options?: StripeElementsOptions;
 }> = ({ children, credentials = "default", stripeOptions, options }) => {
+  const key = JSON.stringify(options);
+
   return (
     <Elements
       stripe={getStripePromise(credentials, stripeOptions)}
       options={options}
+      key={key}
     >
       {children}
     </Elements>
