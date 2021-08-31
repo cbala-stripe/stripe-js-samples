@@ -84,6 +84,10 @@ export const PAGES = [
     title: "Payment Element (EUR, PaymentIntent, beta_2)",
     href: "/sample/payment-element-beta-2",
   },
+  {
+    title: "Payment Element (EUR, PaymentIntent, Automatic Payment Methods)",
+    href: "/sample/payment-element-automatic-payment-methods",
+  },
 ];
 
 export const CREDENTIALS = {
@@ -121,6 +125,11 @@ export const CREDENTIALS = {
   paypal: {
     publishableKey: process.env.NEXT_PUBLIC_PAYPAL_PK,
     secretKey: process.env.PAYPAL_SK,
+  },
+  automaticPaymentMethods: {
+    publishableKey: process.env.NEXT_PUBLIC_AUTOMATIC_PAYMENT_METHODS_PK,
+    secretKey: process.env.AUTOMATIC_PAYMENT_METHODS_SK,
+    apiVersion: "2020-08-27; automatic_payment_methods_beta=v1",
   },
 };
 
