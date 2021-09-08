@@ -6,14 +6,8 @@ import { Select } from "./Select";
 
 export const SampleSelect: React.FC<{
   label?: string;
-  controls?: JSX.Element;
   options: Array<{ value: string; label: string; disabled?: boolean }>;
-}> = ({
-  children,
-  label = "Sample",
-  controls = null,
-  options: optionsProp,
-}) => {
+}> = ({ label = "Sample", options: optionsProp }) => {
   const router = useRouter();
 
   const handleChange = (value: string) => {
