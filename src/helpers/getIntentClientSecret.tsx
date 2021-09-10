@@ -35,9 +35,10 @@ export const getIntentClientSecret = async (
 
   let resp: Stripe.PaymentIntent | Stripe.SetupIntent;
   if (intentType === "payment") {
-    // @ts-ignore: assume the caller passed in `intentFields` corresponding to the `intentType`
+    // @ts-expect-error: assume the caller passed in `intentFields` corresponding to the `intentType`
     resp = await stripe.paymentIntents.create(intentFields, requestOptions);
   } else {
+    // @ts-expect-error
     resp = await stripe.setupIntents.create(intentFields, requestOptions);
   }
 
