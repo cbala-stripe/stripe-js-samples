@@ -13,7 +13,7 @@ export const CredentialedElements: FC<{
   stripeOptions?: StripeConstructorOptions & { betas: string[] };
   options?: StripeElementsOptions;
 }> = ({ children, credentials = "default", stripeOptions, options }) => {
-  const key = JSON.stringify(options);
+  const key = `${options?.fonts}${options?.clientSecret}`;
 
   return (
     <Elements

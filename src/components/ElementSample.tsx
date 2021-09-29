@@ -8,7 +8,7 @@ import { Field } from "./Field";
 import { Input } from "./Input";
 import { useDebugElement } from "../hooks/useDebugElement";
 
-type SubmitFn = (deps: {
+export type SubmitCallback = (deps: {
   stripe: Stripe;
   elements: StripeElements;
   name: string;
@@ -16,7 +16,7 @@ type SubmitFn = (deps: {
 }) => Promise<any>;
 
 export const ElementSample: FC<{
-  onSubmit: SubmitFn;
+  onSubmit: SubmitCallback;
   collectNameAndEmail?: boolean;
 }> = ({ onSubmit, children, collectNameAndEmail = false }) => {
   const stripe = useStripe();

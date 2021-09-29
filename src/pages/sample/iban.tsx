@@ -6,12 +6,27 @@ import {
   Layout,
   Field,
   TestInstructions,
+  SubmitCallback,
 } from "../../components";
-import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
+import { useClientSecret } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
 
-const IbanSample = ({ clientSecret }) => {
-  const handleSubmit = async ({ stripe, elements, name, email }) => {
+const IbanSample = () => {
+  const clientSecret = useClientSecret({
+    intentType: "payment",
+    credentials: "default",
+    intentParameters: {
+      currency: "eur",
+      payment_method_types: ["sepa_debit"],
+    },
+  });
+
+  const handleSubmit: SubmitCallback = async ({
+    stripe,
+    elements,
+    name,
+    email,
+  }) => {
     return stripe.confirmSepaDebitPayment(clientSecret, {
       payment_method: {
         sepa_debit: elements.getElement("iban"),
@@ -41,13 +56,3 @@ const IbanSample = ({ clientSecret }) => {
 };
 
 export default IbanSample;
-
-export const getServerSideProps = async () => {
-  const clientSecret = await getIntentClientSecret("payment", {
-    amount: 500,
-    currency: "eur",
-    payment_method_types: ["sepa_debit"],
-  });
-
-  return { props: { clientSecret } };
-};

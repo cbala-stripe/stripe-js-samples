@@ -1,3 +1,4 @@
+import type { CssFontSource, CustomFontSource } from "@stripe/stripe-js";
 import { useState, useLayoutEffect } from "react";
 
 import { Field, Select } from "../components";
@@ -9,8 +10,12 @@ const OPTIONS = PAYMENT_ELEMENT_THEMES.map((theme) => ({
 }));
 
 export const useAppearanceSelector = (
-  initialTheme: string = "None"
-): [Record<string, any>, JSX.Element, Record<string, string>[]] => {
+  initialTheme: string = PAYMENT_ELEMENT_THEMES[0].label
+): [
+  Record<string, any>,
+  JSX.Element,
+  Array<CssFontSource | CustomFontSource>
+] => {
   const [theme, setTheme] = useState(initialTheme);
 
   const { backgroundColor, appearance, fonts } = OPTIONS.find(

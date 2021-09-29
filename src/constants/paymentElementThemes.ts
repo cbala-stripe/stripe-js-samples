@@ -1,16 +1,42 @@
+import type { CssFontSource, CustomFontSource } from "@stripe/stripe-js";
+
 export type PaymentElementTheme = {
   label: string;
   backgroundColor: string;
   appearance: Record<string, any>;
-  fonts: Record<string, string>[];
+  fonts: Array<CssFontSource | CustomFontSource>;
 };
 
 export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
   {
-    label: "None",
-    backgroundColor: "initial",
+    label: "Default",
+    backgroundColor: "#fff",
     fonts: [],
     appearance: {},
+  },
+  {
+    label: "Default (floating labels)",
+    backgroundColor: "#fff",
+    fonts: [],
+    appearance: {
+      labels: "floating",
+    },
+  },
+  {
+    label: "Night",
+    backgroundColor: "#222",
+    fonts: [],
+    appearance: {
+      theme: "night",
+    },
+  },
+  {
+    label: "None",
+    backgroundColor: "#fff",
+    fonts: [],
+    appearance: {
+      theme: "none",
+    },
   },
   {
     label: "VT323",
@@ -24,14 +50,8 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
       variables: {
         fontFamily: "VT323",
         fontSizeBase: "16px",
-        colorPrimary: "orange",
-        colorSecondary: "orange",
-        colorDisabled: "orange",
-        colorNegative: "orange",
-        boxPadding: "var(--spacing4)",
-        gridRowGap: "var(--spacing4)",
-        gridColumnGap: "var(--spacing4)",
-        boxRadius: "0px",
+        colorText: "orange",
+        borderRadius: "0px",
       },
       // labels: "floating",
       rules: {
@@ -84,7 +104,7 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
-    label: "Stripe",
+    label: "Stripe (beta_1)",
     backgroundColor: "#fff",
     fonts: [],
     appearance: {
@@ -163,7 +183,7 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
-    label: "Bubblegum",
+    label: "Bubblegum (beta_1)",
     backgroundColor: "#fce0f6",
     fonts: [],
     appearance: {
@@ -223,7 +243,7 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
-    label: "Dark",
+    label: "Dark (beta_1)",
     backgroundColor: "#1a1f36",
     fonts: [],
     appearance: {
@@ -285,7 +305,7 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
-    label: "Minimal",
+    label: "Minimal (beta_1)",
     backgroundColor: "#fff",
     fonts: [],
     appearance: {
@@ -332,7 +352,7 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
-    label: "Windows",
+    label: "Windows (beta_1)",
     backgroundColor: "#c1c9d2",
     fonts: [],
     appearance: {

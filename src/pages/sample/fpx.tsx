@@ -5,12 +5,27 @@ import {
   CredentialedElements,
   Layout,
   Field,
+  SubmitCallback,
 } from "../../components";
-import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
+import { useClientSecret } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
 
-const FpxSample = ({ clientSecret }) => {
-  const handleSubmit = async ({ stripe, elements, name, email }) => {
+const FpxSample = () => {
+  const clientSecret = useClientSecret({
+    intentType: "payment",
+    credentials: "fpx",
+    intentParameters: {
+      currency: "myr",
+      payment_method_types: ["fpx"],
+    },
+  });
+
+  const handleSubmit: SubmitCallback = async ({
+    stripe,
+    elements,
+    name,
+    email,
+  }) => {
     return stripe.confirmFpxPayment(clientSecret, {
       payment_method: {
         fpx: elements.getElement("fpxBank"),
@@ -39,17 +54,3 @@ const FpxSample = ({ clientSecret }) => {
 };
 
 export default FpxSample;
-
-export const getServerSideProps = async () => {
-  const clientSecret = await getIntentClientSecret(
-    "payment",
-    {
-      amount: 20000,
-      currency: "myr",
-      payment_method_types: ["fpx"],
-    },
-    { credentials: "fpx" }
-  );
-
-  return { props: { clientSecret } };
-};

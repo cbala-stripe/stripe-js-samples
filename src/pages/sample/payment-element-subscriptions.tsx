@@ -1,13 +1,7 @@
 import Stripe from "stripe";
-import { useState } from "react";
 import { PaymentElement } from "@stripe/react-stripe-js";
 
-import {
-  ElementSample,
-  CredentialedElements,
-  Layout,
-  TestInstructions,
-} from "../../components";
+import { ElementSample, CredentialedElements, Layout } from "../../components";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 import { CREDENTIALS } from "../../constants";
@@ -29,11 +23,6 @@ const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
     });
   };
 
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-  const handleChange = (e: any) => {
-    setSelectedPaymentMethod(e.value.type);
-  };
-
   return (
     <Layout controls={appearanceSelector}>
       <CredentialedElements
@@ -43,9 +32,8 @@ const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
         }}
       >
         <ElementSample onSubmit={handleSubmit}>
-          <TestInstructions paymentMethod={selectedPaymentMethod} />
-          {/* @ts-ignore */}
-          <PaymentElement options={options} onChange={handleChange} />
+          {/* @ts-expect-error */}
+          <PaymentElement options={options} />
         </ElementSample>
       </CredentialedElements>
     </Layout>

@@ -5,12 +5,27 @@ import {
   CredentialedElements,
   Layout,
   Field,
+  SubmitCallback,
 } from "../../components";
-import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
+import { useClientSecret } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
 
-const IdealSample = ({ clientSecret }) => {
-  const handleSubmit = async ({ stripe, elements, name, email }) => {
+const IdealSample = () => {
+  const clientSecret = useClientSecret({
+    intentType: "payment",
+    credentials: "default",
+    intentParameters: {
+      currency: "eur",
+      payment_method_types: ["ideal"],
+    },
+  });
+
+  const handleSubmit: SubmitCallback = async ({
+    stripe,
+    elements,
+    name,
+    email,
+  }) => {
     return stripe.confirmIdealPayment(clientSecret, {
       payment_method: {
         ideal: elements.getElement("idealBank"),
@@ -39,13 +54,3 @@ const IdealSample = ({ clientSecret }) => {
 };
 
 export default IdealSample;
-
-export const getServerSideProps = async () => {
-  const clientSecret = await getIntentClientSecret("payment", {
-    currency: "eur",
-    amount: 500,
-    payment_method_types: ["ideal"],
-  });
-
-  return { props: { clientSecret } };
-};

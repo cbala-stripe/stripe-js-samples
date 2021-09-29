@@ -45,51 +45,15 @@ export const PAGES = [
     href: "/sample/konbini",
   },
   {
-    title: "Payment Element (EUR, PaymentIntent)",
+    title: "Payment Element",
     href: "/sample/payment-element",
   },
   {
-    title: "Payment Element (EUR, PaymentIntent, Connect)",
-    href: "/sample/payment-element-connect",
+    title: "Payment Element (beta_1)",
+    href: "/sample/payment-element-beta-1",
   },
   {
-    title: "Payment Element (EUR, SetupIntent)",
-    href: "/sample/payment-element-setup-intent",
-  },
-  {
-    title: "Payment Element (MXN, PaymentIntent)",
-    href: "/sample/payment-element-mxn",
-  },
-  {
-    title: "Payment Element (JPY, PaymentIntent)",
-    href: "/sample/payment-element-jpy",
-  },
-  {
-    title: "Payment Element (AUD, PaymentIntent)",
-    href: "/sample/payment-element-aud",
-  },
-  {
-    title: "Payment Element (AUD, SetupIntent)",
-    href: "/sample/payment-element-aud-setup-intent",
-  },
-  {
-    title: "Payment Element (USD, PaymentIntent)",
-    href: "/sample/payment-element-usd",
-  },
-  {
-    title: "Payment Element (USD, SetupIntent)",
-    href: "/sample/payment-element-usd-setup-intent",
-  },
-  {
-    title: "Payment Element (EUR, PaymentIntent, beta_2)",
-    href: "/sample/payment-element-beta-2",
-  },
-  {
-    title: "Payment Element (EUR, PaymentIntent, Automatic Payment Methods)",
-    href: "/sample/payment-element-automatic-payment-methods",
-  },
-  {
-    title: "Payment Element (Subscriptions)",
+    title: "Payment Element (Subscriptions, beta_1)",
     href: "/sample/payment-element-subscriptions",
   },
 ];

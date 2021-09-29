@@ -9,16 +9,27 @@ import {
   CredentialedElements,
   Layout,
   Field,
+  SubmitCallback,
 } from "../../components";
-import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
+import { useClientSecret } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
 
-const SplitCardSample = ({ clientSecret }) => {
-  const handleSubmit = async ({ stripe, elements }) => {
+const SplitCardSample = () => {
+  const clientSecret = useClientSecret({
+    intentType: "payment",
+    credentials: "default",
+    intentParameters: {
+      currency: "usd",
+      payment_method_types: ["card"],
+    },
+  });
+
+  const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmCardPayment(clientSecret, {
       payment_method: { card: elements.getElement("cardNumber") },
     });
   };
+
   return (
     <Layout>
       <CredentialedElements>
@@ -47,12 +58,3 @@ const SplitCardSample = ({ clientSecret }) => {
 };
 
 export default SplitCardSample;
-
-export const getServerSideProps = async () => {
-  const clientSecret = await getIntentClientSecret("payment", {
-    amount: 500,
-    currency: "usd",
-  });
-
-  return { props: { clientSecret } };
-};

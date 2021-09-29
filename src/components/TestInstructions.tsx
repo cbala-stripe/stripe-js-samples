@@ -1,6 +1,5 @@
 import { FC } from "react";
-
-import { List } from "./List";
+import { List } from "../components/List";
 
 export const TestInstructions: FC<{
   paymentMethod: "sepa_debit" | "au_becs_debit";

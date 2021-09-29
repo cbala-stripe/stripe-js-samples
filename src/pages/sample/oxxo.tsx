@@ -1,8 +1,22 @@
-import { ElementSample, CredentialedElements, Layout } from "../../components";
-import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
+import {
+  ElementSample,
+  CredentialedElements,
+  Layout,
+  SubmitCallback,
+} from "../../components";
+import { useClientSecret } from "../../hooks";
 
-const OxxoSample = ({ clientSecret }) => {
-  const handleSubmit = async ({ stripe, name, email }) => {
+const OxxoSample = () => {
+  const clientSecret = useClientSecret({
+    intentType: "payment",
+    credentials: "oxxo",
+    intentParameters: {
+      currency: "mxn",
+      payment_method_types: ["oxxo"],
+    },
+  });
+
+  const handleSubmit: SubmitCallback = async ({ stripe, name, email }) => {
     return stripe.confirmOxxoPayment(clientSecret, {
       payment_method: {
         billing_details: {
@@ -23,17 +37,3 @@ const OxxoSample = ({ clientSecret }) => {
 };
 
 export default OxxoSample;
-
-export const getServerSideProps = async () => {
-  const clientSecret = await getIntentClientSecret(
-    "payment",
-    {
-      amount: 10000,
-      currency: "mxn",
-      payment_method_types: ["oxxo"],
-    },
-    { credentials: "oxxo" }
-  );
-
-  return { props: { clientSecret } };
-};

@@ -1,8 +1,29 @@
-import { ElementSample, CredentialedElements, Layout } from "../../components";
-import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
+import {
+  ElementSample,
+  CredentialedElements,
+  Layout,
+  SubmitCallback,
+} from "../../components";
+import { useClientSecret } from "../../hooks";
 
-const KonbiniSample = ({ clientSecret }) => {
-  const handleSubmit = async ({ stripe, name, email }) => {
+const KonbiniSample = () => {
+  const clientSecret = useClientSecret({
+    intentType: "payment",
+    credentials: "konbini",
+    intentParameters: {
+      currency: "jpy",
+      payment_method_types: ["konbini"],
+      payment_method_options: {
+        // @ts-ignore
+        konbini: {
+          product_description: "Tシャツ",
+        },
+      },
+    },
+  });
+
+  const handleSubmit: SubmitCallback = async ({ stripe, name, email }) => {
+    // @ts-expect-error
     return stripe.confirmKonbiniPayment(clientSecret, {
       payment_method: {
         konbini: {},
@@ -34,25 +55,3 @@ const KonbiniSample = ({ clientSecret }) => {
 };
 
 export default KonbiniSample;
-
-export const getServerSideProps = async () => {
-  const clientSecret = await getIntentClientSecret(
-    "payment",
-    {
-      amount: 1099,
-      currency: "jpy",
-      payment_method_types: ["konbini"],
-      payment_method_options: {
-        // @ts-ignore
-        konbini: {
-          product_description: "Tシャツ",
-        },
-      },
-    },
-    {
-      credentials: "konbini",
-    }
-  );
-
-  return { props: { clientSecret } };
-};

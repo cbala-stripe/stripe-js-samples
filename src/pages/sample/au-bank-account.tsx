@@ -6,12 +6,27 @@ import {
   Layout,
   Field,
   TestInstructions,
+  SubmitCallback,
 } from "../../components";
-import { getIntentClientSecret } from "../../helpers/getIntentClientSecret";
 import { INPUT_CLASSNAME } from "../../constants";
+import { useClientSecret } from "../../hooks";
 
-const AuBankAccountSample = ({ clientSecret }) => {
-  const handleSubmit = async ({ stripe, elements, name, email }) => {
+const AuBankAccountSample = () => {
+  const clientSecret = useClientSecret({
+    intentType: "payment",
+    credentials: "auBecs",
+    intentParameters: {
+      currency: "aud",
+      payment_method_types: ["au_becs_debit"],
+    },
+  });
+
+  const handleSubmit: SubmitCallback = async ({
+    stripe,
+    elements,
+    name,
+    email,
+  }) => {
     return stripe.confirmAuBecsDebitPayment(clientSecret, {
       payment_method: {
         au_becs_debit: elements.getElement("auBankAccount"),
@@ -40,17 +55,3 @@ const AuBankAccountSample = ({ clientSecret }) => {
 };
 
 export default AuBankAccountSample;
-
-export const getServerSideProps = async () => {
-  const clientSecret = await getIntentClientSecret(
-    "payment",
-    {
-      amount: 1099,
-      currency: "aud",
-      payment_method_types: ["au_becs_debit"],
-    },
-    { credentials: "auBecs" }
-  );
-
-  return { props: { clientSecret } };
-};
