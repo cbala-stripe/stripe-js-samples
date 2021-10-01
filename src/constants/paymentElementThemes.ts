@@ -104,6 +104,41 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
+    label: "Ninety Five",
+    backgroundColor: "#c1c9d2",
+    fonts: [],
+    appearance: {
+      theme: "none",
+      variables: {
+        fontFamily: "Verdana",
+        fontLineHeight: "1.5",
+        borderRadius: "0",
+        colorBackground: "#dfdfdf",
+        fontSizeBase: "14px",
+      },
+      rules: {
+        ".Input": {
+          backgroundColor: "#ffffff",
+          boxShadow:
+            "inset -1px -1px #ffffff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080",
+        },
+        ".Input--invalid": {
+          color: "#DF1B41",
+        },
+        ".Tab, .Block": {
+          boxShadow:
+            "inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf",
+        },
+        ".Tab:hover": {
+          backgroundColor: "#eee",
+        },
+        ".Tab--selected, .Tab--selected:focus, .Tab--selected:hover": {
+          backgroundColor: "#ccc",
+        },
+      },
+    },
+  },
+  {
     label: "Stripe (beta_1)",
     backgroundColor: "#fff",
     fonts: [],
@@ -351,8 +386,9 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
       },
     },
   },
+
   {
-    label: "Windows (beta_1)",
+    label: "Ninety Five (beta_1)",
     backgroundColor: "#c1c9d2",
     fonts: [],
     appearance: {
