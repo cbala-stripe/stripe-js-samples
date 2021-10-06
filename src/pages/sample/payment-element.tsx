@@ -176,7 +176,16 @@ const PaymentElementSample = () => {
   const [appearance, appearanceSelector, fonts] = useAppearanceSelector();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
-    return stripe.confirmPayment({
+    if (config.intentType === "payment") {
+      return stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/status?credentials=${config.credentials}`,
+        },
+      });
+    }
+
+    return stripe.confirmSetup({
       elements,
       confirmParams: {
         return_url: `${window.location.origin}/status?credentials=${config.credentials}`,
