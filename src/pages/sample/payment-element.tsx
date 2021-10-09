@@ -63,6 +63,22 @@ const CONFIGS: Array<Config> = [
     },
   },
   {
+    label: "EUR, SetupIntent, Connect",
+    request: {
+      intentType: "setup",
+      credentials: "connect",
+      intentParameters: {
+        payment_method_types: [
+          "bancontact",
+          "card",
+          "ideal",
+          "sepa_debit",
+          "sofort",
+        ],
+      },
+    },
+  },
+  {
     label: "EUR, PaymentIntent, Automatic Payment Methods",
     request: {
       intentType: "payment",
