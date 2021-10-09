@@ -1,4 +1,5 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 import {
@@ -14,10 +15,12 @@ import { useAppearanceSelector, useClientSecret } from "../../hooks";
 
 import type { IntentRequest } from "../api/intent";
 
-const CONFIGS: Array<{
+type Config = {
   label: string;
   request: IntentRequest;
-}> = [
+};
+
+const CONFIGS: Array<Config> = [
   {
     label: "EUR, PaymentIntent",
     request: {
@@ -168,19 +171,38 @@ const CONFIG_OPTIONS = CONFIGS.map((config) => ({
   value: config.label,
 }));
 
+const useConfig = (): {
+  config: Config;
+  onChangeConfig: (configLabel: string) => void;
+} => {
+  const router = useRouter();
+  const configQueryParam = router.query.config as string;
+  const configLabel = configQueryParam ?? CONFIG_OPTIONS[0].label;
+  const config = CONFIGS.find((config) => config.label === configLabel);
+
+  const onChangeConfig = (configLabel: string) => {
+    router.push({
+      pathname: "/sample/payment-element",
+      query: { config: configLabel },
+    });
+  };
+
+  return { config, onChangeConfig };
+};
+
 const PaymentElementSample = () => {
-  const [configLabel, setConfigLabel] = useState(CONFIG_OPTIONS[0].label);
-  const config = CONFIGS.find((config) => config.label === configLabel).request;
-  const clientSecret = useClientSecret(config);
+  const { config, onChangeConfig } = useConfig();
+
+  const clientSecret = useClientSecret(config.request);
 
   const [appearance, appearanceSelector, fonts] = useAppearanceSelector();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
-    if (config.intentType === "payment") {
+    if (config.request.intentType === "payment") {
       return stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/status?credentials=${config.credentials}`,
+          return_url: `${window.location.origin}/status?credentials=${config.request.credentials}`,
         },
       });
     }
@@ -188,7 +210,7 @@ const PaymentElementSample = () => {
     return stripe.confirmSetup({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/status?credentials=${config.credentials}`,
+        return_url: `${window.location.origin}/status?credentials=${config.request.credentials}`,
       },
     });
   };
@@ -204,8 +226,8 @@ const PaymentElementSample = () => {
         <>
           <Field label="Scenario">
             <Select
-              value={configLabel}
-              onChange={setConfigLabel}
+              value={config.label}
+              onChange={onChangeConfig}
               options={CONFIG_OPTIONS}
             />
           </Field>
@@ -215,7 +237,7 @@ const PaymentElementSample = () => {
     >
       {clientSecret && (
         <CredentialedElements
-          credentials={config.credentials}
+          credentials={config.request.credentials}
           stripeOptions={{ betas: ["payment_element_beta_2"] }}
           options={{ clientSecret, appearance, fonts }}
         >
