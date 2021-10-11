@@ -11,7 +11,11 @@ import {
   Select,
   TestInstructions,
 } from "../../components";
-import { useAppearanceSelector, useClientSecret } from "../../hooks";
+import {
+  useAppearanceSelector,
+  useClientSecret,
+  useLocaleSelector,
+} from "../../hooks";
 
 import type { IntentRequest } from "../api/intent";
 
@@ -212,6 +216,7 @@ const PaymentElementSample = () => {
   const clientSecret = useClientSecret(config.request);
 
   const [appearance, appearanceSelector, fonts] = useAppearanceSelector();
+  const [locale, localeSelector] = useLocaleSelector();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     if (config.request.intentType === "payment") {
@@ -248,6 +253,7 @@ const PaymentElementSample = () => {
             />
           </Field>
           {appearanceSelector}
+          {localeSelector}
         </>
       }
     >
@@ -255,7 +261,7 @@ const PaymentElementSample = () => {
         <CredentialedElements
           credentials={config.request.credentials}
           stripeOptions={{ betas: ["payment_element_beta_2"] }}
-          options={{ clientSecret, appearance, fonts }}
+          options={{ clientSecret, appearance, fonts, locale }}
         >
           <ElementSample onSubmit={handleSubmit}>
             <TestInstructions paymentMethod={selectedPaymentMethod} />
