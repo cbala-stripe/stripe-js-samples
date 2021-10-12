@@ -11,7 +11,7 @@ import {
   Field,
   SubmitCallback,
 } from "../../components";
-import { useClientSecret } from "../../hooks";
+import { useClientSecret, useLocaleSelector } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
 
 const SplitCardSample = () => {
@@ -24,6 +24,8 @@ const SplitCardSample = () => {
     },
   });
 
+  const [locale, localeSelector] = useLocaleSelector();
+
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmCardPayment(clientSecret, {
       payment_method: { card: elements.getElement("cardNumber") },
@@ -31,8 +33,8 @@ const SplitCardSample = () => {
   };
 
   return (
-    <Layout>
-      <CredentialedElements>
+    <Layout controls={localeSelector}>
+      <CredentialedElements options={{ locale }}>
         <ElementSample onSubmit={handleSubmit}>
           <div className="grid gap-4">
             <Field label="Card number">
