@@ -139,6 +139,67 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
+    label: "Poseidon",
+    backgroundColor: "#0C2E4E",
+    fonts: [],
+    appearance: {
+      theme: "none",
+      variables: {
+        fontFamily: "Sohne, system-ui, sans-serif",
+        fontSizeBase: "14px",
+        fontWeightNormal: "500",
+        borderRadius: "8px",
+        colorPrimary: "#FFCE48",
+        colorText: "white",
+        colorTextSecondary: "white",
+        colorTextPlaceholder: "#727F96",
+        colorIconTab: "white",
+        colorIconTabSelected: "#1A1B25",
+        colorLogo: "dark",
+      },
+      rules: {
+        ".Tab": {
+          backgroundColor: "#0A2540",
+        },
+        ".Tab--selected": {
+          backgroundColor: "#FFCE48",
+          color: "#1A1B25",
+        },
+        ".Input": {
+          backgroundColor: "transparent",
+          border: "1.5px solid #FFCE48",
+        },
+      },
+    },
+  },
+  {
+    label: "Bubblegum",
+    backgroundColor: "#F8E1F5",
+    fonts: [],
+    appearance: {
+      theme: "none",
+      variables: {
+        fontSizeBase: "14px",
+        fontWeightNormal: "500",
+        borderRadius: "2px",
+        colorIconTabSelected: "white",
+        spacingGridRow: "15px",
+      },
+      rules: {
+        ".Label": {
+          marginBottom: "6px",
+        },
+        ".Tab, .Input": {
+          boxShadow: "0px 3px 10px rgba(18, 42, 66, 0.08)",
+        },
+        ".Tab--selected": {
+          backgroundColor: "#DF1B41",
+          color: "white",
+        },
+      },
+    },
+  },
+  {
     label: "Stripe (beta_1)",
     backgroundColor: "#fff",
     fonts: [],
