@@ -53,7 +53,7 @@ export const PAGES = [
     href: "/sample/payment-element-beta-1",
   },
   {
-    title: "Payment Element (Subscriptions, beta_1)",
+    title: "Payment Element (Subscriptions)",
     href: "/sample/payment-element-subscriptions",
   },
 ];

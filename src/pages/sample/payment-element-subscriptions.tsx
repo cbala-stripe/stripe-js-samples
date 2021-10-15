@@ -1,7 +1,12 @@
 import Stripe from "stripe";
 import { PaymentElement } from "@stripe/react-stripe-js";
 
-import { ElementSample, CredentialedElements, Layout } from "../../components";
+import {
+  ElementSample,
+  CredentialedElements,
+  Layout,
+  SubmitCallback,
+} from "../../components";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 import { CREDENTIALS } from "../../constants";
@@ -9,14 +14,9 @@ import { CREDENTIALS } from "../../constants";
 const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
   const [appearance, appearanceSelector] = useAppearanceSelector();
 
-  const options = {
-    clientSecret,
-    appearance,
-  };
-
-  const handleSubmit = async ({ stripe, elements }) => {
+  const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmPayment({
-      element: elements.getElement(PaymentElement),
+      elements,
       confirmParams: {
         return_url: `${window.location.origin}/status?credentials=subscriptions&subscription=${subscription}`,
       },
@@ -27,13 +27,11 @@ const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
     <Layout controls={appearanceSelector}>
       <CredentialedElements
         credentials="subscriptions"
-        stripeOptions={{
-          betas: ["payment_element_beta_1"],
-        }}
+        stripeOptions={{ betas: ["payment_element_beta_2"] }}
+        options={{ clientSecret, appearance }}
       >
         <ElementSample onSubmit={handleSubmit}>
-          {/* @ts-expect-error */}
-          <PaymentElement options={options} />
+          <PaymentElement />
         </ElementSample>
       </CredentialedElements>
     </Layout>
