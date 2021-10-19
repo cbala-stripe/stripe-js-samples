@@ -260,7 +260,6 @@ const PaymentElementSample = () => {
       {clientSecret && (
         <CredentialedElements
           credentials={config.request.credentials}
-          stripeOptions={{ betas: ["payment_element_beta_2"] }}
           options={{ clientSecret, appearance, fonts, locale }}
         >
           <ElementSample onSubmit={handleSubmit}>

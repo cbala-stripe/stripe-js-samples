@@ -27,7 +27,6 @@ const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
     <Layout controls={appearanceSelector}>
       <CredentialedElements
         credentials="subscriptions"
-        stripeOptions={{ betas: ["payment_element_beta_2"] }}
         options={{ clientSecret, appearance }}
       >
         <ElementSample onSubmit={handleSubmit}>
