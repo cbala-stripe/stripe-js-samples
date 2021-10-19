@@ -7,6 +7,7 @@ import {
   Layout,
   SubmitCallback,
 } from "../../components";
+import { PAYMENT_ELEMENT_BETA_1_THEMES } from "../../constants/paymentElementThemes";
 import { useAppearanceSelector, useClientSecret } from "../../hooks";
 
 const PaymentElementBeta1Sample = () => {
@@ -28,7 +29,10 @@ const PaymentElementBeta1Sample = () => {
     },
   });
 
-  const [appearance, appearanceSelector, fonts] = useAppearanceSelector("None");
+  const [appearance, appearanceSelector, fonts] = useAppearanceSelector(
+    "Default",
+    PAYMENT_ELEMENT_BETA_1_THEMES
+  );
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmPayment({

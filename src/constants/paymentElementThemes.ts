@@ -1,26 +1,22 @@
-import type { CssFontSource, CustomFontSource } from "@stripe/stripe-js";
+import type {
+  CssFontSource,
+  CustomFontSource,
+  Appearance,
+} from "@stripe/stripe-js";
 
 export type PaymentElementTheme = {
   label: string;
   backgroundColor: string;
-  appearance: Record<string, any>;
+  appearance: Appearance;
   fonts: Array<CssFontSource | CustomFontSource>;
 };
 
 export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
   {
-    label: "Default",
+    label: "Stripe",
     backgroundColor: "#fff",
     fonts: [],
     appearance: {},
-  },
-  {
-    label: "Default (floating labels)",
-    backgroundColor: "#fff",
-    fonts: [],
-    appearance: {
-      labels: "floating",
-    },
   },
   {
     label: "Night",
@@ -28,6 +24,15 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     fonts: [],
     appearance: {
       theme: "night",
+    },
+  },
+  {
+    label: "Flat",
+    backgroundColor: "#fff",
+    fonts: [],
+    appearance: {
+      // @ts-expect-error
+      theme: "flat",
     },
   },
   {
@@ -39,6 +44,15 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
+    label: "Floating",
+    backgroundColor: "#fff",
+    fonts: [],
+    appearance: {
+      // @ts-expect-error
+      labels: "floating",
+    },
+  },
+  {
     label: "VT323",
     backgroundColor: "#111111",
     fonts: [
@@ -47,58 +61,37 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
       },
     ],
     appearance: {
+      theme: "none",
       variables: {
         fontFamily: "VT323",
-        fontSizeBase: "16px",
+        fontSizeBase: "18px",
         colorText: "orange",
+        colorTextSecondary: "orange",
         borderRadius: "0px",
+        colorLogo: "dark",
+        colorBackground: "#111",
+        spacingUnit: "3px",
+        colorIcon: "orange",
+        colorIconTabSelected: "#111",
       },
-      // labels: "floating",
+      // @ts-expect-error
+      labels: "floating",
       rules: {
-        ".Label": {
-          paddingBottom: "0px",
-          fontSize: "18px",
-          transition: "all .3s steps(2, jump-both)",
-        },
         ".Label--floating": {
-          fontSize: "12px",
-          paddingBottom: "0px",
           transition: "all .3s steps(2, jump-both)",
         },
-        ".Input": {
-          backgroundColor: "#111",
-          borderColor: "orange",
-          color: "orange",
-        },
-        ".Input:focus": {
-          outline: "none",
+        ".Input, .Block, .Tab": {
+          border: "1px solid orange",
         },
         ".Tab": {
-          boxSizing: "content-box",
-          backgroundColor: "#111",
-          borderColor: "orange",
-          color: "orange",
+          fontWeight: "normal",
         },
-        ".Tab--selected": {
+        ".Tab--selected, .Tab:hover": {
           backgroundColor: "orange",
-          borderColor: "orange",
           color: "#111",
         },
-        ".Tab:hover": {
-          backgroundColor: "#111",
-          borderColor: "orange",
-          color: "orange",
-        },
-        ".Tab--selected:hover": {
-          backgroundColor: "orange",
-          borderColor: "orange",
-          color: "#111",
-        },
-        ".TabIcon": {
-          fill: "orange",
-        },
-        ".TabIcon--selected": {
-          fill: "#111",
+        ".Tab:focus, .Input:focus": {
+          outline: "solid orange",
         },
       },
     },
@@ -139,7 +132,7 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
-    label: "Poseidon",
+    label: "Dark Blue",
     backgroundColor: "#0C2E4E",
     fonts: [],
     appearance: {
@@ -199,8 +192,17 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
       },
     },
   },
+];
+
+export const PAYMENT_ELEMENT_BETA_1_THEMES: PaymentElementTheme[] = [
   {
-    label: "Stripe (beta_1)",
+    label: "Default",
+    backgroundColor: "#fff",
+    fonts: [],
+    appearance: {},
+  },
+  {
+    label: "Stripe ",
     backgroundColor: "#fff",
     fonts: [],
     appearance: {
@@ -279,10 +281,11 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
-    label: "Bubblegum (beta_1)",
+    label: "Bubblegum ",
     backgroundColor: "#fce0f6",
     fonts: [],
     appearance: {
+      // @ts-expect-error
       rowGap: "15px",
       rules: {
         "*": {
@@ -339,10 +342,11 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
-    label: "Dark (beta_1)",
+    label: "Dark ",
     backgroundColor: "#1a1f36",
     fonts: [],
     appearance: {
+      // @ts-expect-error
       columnGap: "15px",
       rules: {
         "*": {
@@ -401,10 +405,11 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     },
   },
   {
-    label: "Minimal (beta_1)",
+    label: "Minimal ",
     backgroundColor: "#fff",
     fonts: [],
     appearance: {
+      // @ts-expect-error
       rowGap: "10px",
       columnGap: "5px",
       rules: {
@@ -447,12 +452,12 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
       },
     },
   },
-
   {
-    label: "Ninety Five (beta_1)",
+    label: "Ninety Five ",
     backgroundColor: "#c1c9d2",
     fonts: [],
     appearance: {
+      // @ts-expect-error
       rowGap: "10px",
       columnGap: "5px",
       rules: {
