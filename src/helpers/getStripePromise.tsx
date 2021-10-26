@@ -1,7 +1,8 @@
 import type { Stripe } from "@stripe/stripe-js";
 import { loadStripe, StripeConstructorOptions } from "@stripe/stripe-js";
 
-import { CredentialsKey, CREDENTIALS } from "../constants";
+import { CredentialsKey } from "../constants";
+import { getCredentials } from "./getCredentials";
 
 const stripePromiseCache = {};
 
@@ -9,13 +10,8 @@ export const getStripePromise = (
   credentialsKey: CredentialsKey,
   additionalOptions?: StripeConstructorOptions & { betas: string[] }
 ): Promise<Stripe> => {
-  const { publishableKey, stripeAccount, apiVersion } = CREDENTIALS[
-    credentialsKey
-  ] as {
-    publishableKey: string;
-    stripeAccount?: string;
-    apiVersion?: string;
-  };
+  const { publishableKey, stripeAccount, apiVersion } =
+    getCredentials(credentialsKey);
 
   const allOptions = {
     stripeAccount,

@@ -9,7 +9,7 @@ import {
 } from "../../components";
 import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
-import { CREDENTIALS } from "../../constants";
+import { getCredentials } from "../../helpers/getCredentials";
 
 const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
   const [appearance, appearanceSelector] = useAppearanceSelector();
@@ -40,7 +40,7 @@ const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
 export default PaymentElementSubscriptionsSample;
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(CREDENTIALS.subscriptions.secretKey, {
+  const stripe = new Stripe(getCredentials("subscriptions").secretKey, {
     apiVersion: "2020-08-27",
   });
 

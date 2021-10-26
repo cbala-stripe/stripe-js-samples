@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import { useDebugElement } from "../../hooks/useDebugElement";
 import { Layout } from "../../components/Layout";
-import { CREDENTIALS } from "../../constants";
+import { getCredentials } from "../../helpers/getCredentials";
 
 const PaymentRequestButtonSample = ({ clientSecret }) => {
   const [ref, setRef] = useState(null);
@@ -14,7 +14,7 @@ const PaymentRequestButtonSample = ({ clientSecret }) => {
       return;
     }
 
-    loadStripe(CREDENTIALS.default.publishableKey).then((stripe) => {
+    loadStripe(getCredentials("default").publishableKey).then((stripe) => {
       const elements = stripe.elements();
 
       const paymentRequest = stripe.paymentRequest({

@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
-import { CredentialsKey, CREDENTIALS } from "../../constants";
+import { CredentialsKey } from "../../constants";
+import { getCredentials } from "../../helpers/getCredentials";
 
 export type IntentRequest = {
   intentType: "payment" | "setup";
@@ -24,11 +25,7 @@ const intentHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { intentType, credentials, attachNewCustomer, intentParameters } =
     req.body as IntentRequest;
 
-  const { secretKey, stripeAccount, apiVersion } = CREDENTIALS[credentials] as {
-    secretKey: string;
-    stripeAccount?: string;
-    apiVersion?: string;
-  };
+  const { secretKey, stripeAccount, apiVersion } = getCredentials(credentials);
 
   // @ts-expect-error
   const stripe = new Stripe(secretKey, { apiVersion });
