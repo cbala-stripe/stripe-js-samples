@@ -42,6 +42,7 @@ const CONFIGS: Array<Config> = [
           "sepa_debit",
           "sofort",
           "paypal",
+          "klarna",
         ],
       },
     },
