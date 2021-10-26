@@ -35,7 +35,7 @@ const ManualConfirmationSample = () => {
     const firstFinalizeRespBody = await firstFinalizeResp.json();
 
     if (!firstFinalizeResp.ok) {
-      return firstFinalizeResp;
+      return firstFinalizeRespBody;
     }
 
     const { clientSecret, status, nextActionType } = firstFinalizeRespBody;

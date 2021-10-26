@@ -3,6 +3,7 @@ import Stripe from "stripe";
 
 import { getCredentials } from "../../helpers/getCredentials";
 
+// https://stripe.com/docs/payments/accept-a-payment-synchronously
 const finalizeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { secretKey, stripeAccount, apiVersion } = getCredentials("default");
 
