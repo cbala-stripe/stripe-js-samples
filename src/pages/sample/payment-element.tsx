@@ -185,6 +185,18 @@ const CONFIGS: Array<Config> = [
       },
     },
   },
+  {
+    label: "SGD, PaymentIntent",
+    request: {
+      intentType: "payment",
+      credentials: "default",
+      attachNewCustomer: true,
+      intentParameters: {
+        currency: "usd",
+        payment_method_types: ["card", "wechat_pay"],
+      },
+    },
+  },
 ];
 
 const CONFIG_OPTIONS = CONFIGS.map((config) => ({
