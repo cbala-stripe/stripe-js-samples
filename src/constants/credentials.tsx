@@ -43,6 +43,11 @@ export const CREDENTIALS = {
     publishableKey: process.env.NEXT_PUBLIC_DEFAULT_PK,
     secretKey: process.env.DEFAULT_SK,
   },
+  link: {
+    publishableKey: process.env.NEXT_PUBLIC_LINK_PK,
+    secretKey: process.env.LINK_SK,
+    apiVersion: "2020-08-27; link_beta=v1",
+  },
 };
 
 export type CredentialsKey = keyof typeof CREDENTIALS;

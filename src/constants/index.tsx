@@ -57,6 +57,10 @@ export const PAGES = [
     href: "/sample/payment-element-subscriptions",
   },
   {
+    title: "Link",
+    href: "/sample/link",
+  },
+  {
     title: "Finalize payments on the server",
     href: "/sample/manual-confirmation",
   },
