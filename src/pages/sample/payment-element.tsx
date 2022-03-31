@@ -161,7 +161,7 @@ const CONFIGS: Array<Config> = [
     label: "USD, PaymentIntent",
     request: {
       intentType: "payment",
-      credentials: "usBankAccount",
+      credentials: "default",
       attachNewCustomer: true,
       intentParameters: {
         currency: "usd",
