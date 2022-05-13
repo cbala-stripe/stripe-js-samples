@@ -1,9 +1,13 @@
+import { ReactNode } from "react";
 import { PAGES } from "../constants";
 import { SampleSelect } from "./SampleSelect";
 
-export const Layout: React.FC<{ controls?: JSX.Element }> = ({
+export const Layout = ({
   children,
   controls = null,
+}: {
+  children?: ReactNode;
+  controls?: JSX.Element;
 }) => {
   const options = PAGES.map(({ title, href }) => ({
     value: href,

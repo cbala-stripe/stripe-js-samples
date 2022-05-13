@@ -1,11 +1,17 @@
 import { INPUT_CLASSNAME } from "../constants";
 
-export const Select: React.FC<{
+export const Select = ({
+  className = "",
+  value = "",
+  onChange,
+  options,
+  ...props
+}: {
   className?: string;
   value: string;
   onChange: (newValue: string) => void;
   options: Array<{ value: string; label: string; disabled?: boolean }>;
-}> = ({ className = "", value = "", onChange, options, ...props }) => {
+}) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value);
   };

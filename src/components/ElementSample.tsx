@@ -1,4 +1,4 @@
-import type { FC, FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 import { useState, useEffect } from "react";
 import type { Stripe, StripeElements } from "@stripe/stripe-js";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
@@ -15,10 +15,15 @@ export type SubmitCallback = (deps: {
   email: string;
 }) => Promise<any>;
 
-export const ElementSample: FC<{
+export const ElementSample = ({
+  onSubmit,
+  children,
+  collectNameAndEmail = false,
+}: {
+  children?: ReactNode;
   onSubmit: SubmitCallback;
   collectNameAndEmail?: boolean;
-}> = ({ onSubmit, children, collectNameAndEmail = false }) => {
+}) => {
   const stripe = useStripe();
   const elements = useElements();
   const [resultElement, setResult] = useDebugElement();

@@ -1,9 +1,10 @@
-import { FC } from "react";
 import { List } from "../components/List";
 
-export const TestInstructions: FC<{
+export const TestInstructions = ({
+  paymentMethod,
+}: {
   paymentMethod: "sepa_debit" | "au_becs_debit";
-}> = ({ paymentMethod }) => {
+}) => {
   if (paymentMethod === "sepa_debit") {
     return (
       <List>

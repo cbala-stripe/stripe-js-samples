@@ -4,10 +4,13 @@ import { PAGES } from "../constants";
 import { Field } from "./Field";
 import { Select } from "./Select";
 
-export const SampleSelect: React.FC<{
+export const SampleSelect = ({
+  label = "Sample",
+  options: optionsProp,
+}: {
   label?: string;
   options: Array<{ value: string; label: string; disabled?: boolean }>;
-}> = ({ label = "Sample", options: optionsProp }) => {
+}) => {
   const router = useRouter();
 
   const handleChange = (value: string) => {

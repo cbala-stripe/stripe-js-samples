@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { ReactNode } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import {
   StripeConstructorOptions,
@@ -8,11 +8,17 @@ import {
 import { CredentialsKey } from "../constants";
 import { getStripePromise } from "../helpers/getStripePromise";
 
-export const CredentialedElements: FC<{
+export const CredentialedElements = ({
+  children,
+  credentials = "default",
+  stripeOptions,
+  options,
+}: {
+  children: ReactNode;
   credentials?: CredentialsKey;
   stripeOptions?: StripeConstructorOptions & { betas: string[] };
   options?: StripeElementsOptions;
-}> = ({ children, credentials = "default", stripeOptions, options }) => {
+}) => {
   const key = `${options?.fonts}${options?.clientSecret}`;
 
   return (
