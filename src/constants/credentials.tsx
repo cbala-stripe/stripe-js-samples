@@ -47,6 +47,11 @@ export const CREDENTIALS = {
     secretKey: process.env.LINK_SK,
     apiVersion: "2020-08-27; link_beta=v1",
   },
+  promptpay: {
+    publishableKey: process.env.NEXT_PUBLIC_PROMPTPAY_PK,
+    secretKey: process.env.PROMPTPAY_SK,
+    apiVersion: "2020-08-27;promptpay_beta=v1",
+  },
 };
 
 export type CredentialsKey = keyof typeof CREDENTIALS;

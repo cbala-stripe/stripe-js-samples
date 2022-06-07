@@ -68,6 +68,10 @@ export const PAGES = [
     title: "Afterpay Clearpay Message Element",
     href: "/sample/afterpay-message",
   },
+  {
+    title: "PromptPay",
+    href: "/sample/promptpay",
+  },
 ];
 
 export { CREDENTIALS } from "./credentials";
