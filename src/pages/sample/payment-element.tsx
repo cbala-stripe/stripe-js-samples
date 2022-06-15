@@ -170,6 +170,7 @@ const CONFIGS: Array<Config> = [
           "afterpay_clearpay",
           "alipay",
           "us_bank_account",
+          "affirm",
         ],
       },
     },
