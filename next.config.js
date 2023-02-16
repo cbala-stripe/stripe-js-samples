@@ -11,10 +11,15 @@ module.exports = (phase) => {
       const csp = {
         "base-uri": [`'none'`],
         "object-src": [`'none'`],
-        "frame-src": ["https://js.stripe.com", "https://hooks.stripe.com"],
+        "frame-src": [
+          "https://js.stripe.com",
+          "https://edge-js.stripe.com",
+          "https://hooks.stripe.com",
+        ],
         "script-src": [
           `'self'`,
           "https://js.stripe.com",
+          "https://edge-js.stripe.com",
           "https://maps.googleapis.com",
         ],
         "connect-src": [
