@@ -8,18 +8,19 @@ module.exports = (phase) => {
     reactStrictMode: true,
 
     async headers() {
+      const stripeJsUrl = process.env.NEXT_PUBLIC_STRIPE_JS_URL ?? 'https://js.stripe.com/v3/'
+      const stripeJsOrigin = new URL(stripeJsUrl).origin;
+
       const csp = {
         "base-uri": [`'none'`],
         "object-src": [`'none'`],
         "frame-src": [
-          "https://js.stripe.com",
-          "https://edge-js.stripe.com",
+          stripeJsOrigin,
           "https://hooks.stripe.com",
         ],
         "script-src": [
           `'self'`,
-          "https://js.stripe.com",
-          "https://edge-js.stripe.com",
+          stripeJsOrigin,
           "https://maps.googleapis.com",
         ],
         "connect-src": [
