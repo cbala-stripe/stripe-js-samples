@@ -172,17 +172,17 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.6.tgz#023d72a5c4531b4ce204528971700a78a85a0c50"
   integrity sha512-Myxw//kzromB9yWgS8qYGuGVf91oBUUJpNvy5eM50sqvmKLbKjwLxohJnkWGTeeI9v9IBMtPLxz5Gc60FIfvCA==
 
-"@stripe/react-stripe-js@1.8.0-0":
-  version "1.8.0-0"
-  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-1.8.0-0.tgz#42a84b67609ce4c54bc0016f09d8120fc4eff76f"
-  integrity sha512-9kg8aTRzq2VpSv2O6N3Uk5LtiAi3xAIkKP9EDj+Ll9h32fA3ei1Pi1iexNZREO9wdWFq4SKzEplgSikvPg98MA==
+"@stripe/react-stripe-js@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-2.1.0.tgz#71541107628731fb790e1f31d8994fecbcd6cf13"
+  integrity sha512-Zb6Ycrj5QuhYkvtlvvLzo+cysUyA6wkx3zWHQ7uVnHRYRM/n1jtQD6VGBrdmptC8e8PJN6L091gBCyB5P0FqmA==
   dependencies:
     prop-types "^15.7.2"
 
-"@stripe/stripe-js@^1.21.0":
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.21.0.tgz#710768ad4985d31fb0fdef6aee1ec0e0b4287a67"
-  integrity sha512-6C3XsUXZm81G8NFcTqRIBVCYSMau3a2hUkoKSSYIK8NNbzwWFM8eV6BiTUOjMmNsSg/VBn97VmKM0pHVlCAtJA==
+"@stripe/stripe-js@^1.52.0":
+  version "1.52.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.52.0.tgz#39c5a074fcf45ae7c0567b198c9246ca6de7aafc"
+  integrity sha512-Ja2VlaTf3kM5tN4Y0sC8T3ibZAnfGUU/QzMAlk/G+Adz2fF1ycTabtSkdSuVP4/adXox8NkPPV4Xndx/EP4fMg==
 
 "@types/color-name@^1.1.1":
   version "1.1.1"

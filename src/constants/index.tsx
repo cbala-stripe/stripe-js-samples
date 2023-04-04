@@ -57,6 +57,10 @@ export const PAGES = [
     href: "/sample/payment-element-subscriptions",
   },
   {
+    title: "Payment Element (Deferred Intent)",
+    href: "/sample/payment-element-deferred-intent",
+  },
+  {
     title: "Link",
     href: "/sample/link",
   },
