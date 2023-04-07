@@ -76,6 +76,10 @@ export const PAGES = [
     title: "PromptPay",
     href: "/sample/promptpay",
   },
+  {
+    title: "Setup ACH payment details",
+    href: "/sample/setup-ach-payment-details",
+  },
 ];
 
 export { CREDENTIALS } from "./credentials";

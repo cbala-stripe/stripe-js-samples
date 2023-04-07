@@ -31,7 +31,6 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     backgroundColor: "#fff",
     fonts: [],
     appearance: {
-      // @ts-expect-error
       theme: "flat",
     },
   },
@@ -48,7 +47,6 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
     backgroundColor: "#fff",
     fonts: [],
     appearance: {
-      // @ts-expect-error
       labels: "floating",
     },
   },
@@ -74,7 +72,6 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
         colorIcon: "orange",
         colorIconTabSelected: "#111",
       },
-      // @ts-expect-error
       labels: "floating",
       rules: {
         ".Label--floating": {

@@ -23,10 +23,8 @@ const KonbiniSample = () => {
   });
 
   const handleSubmit: SubmitCallback = async ({ stripe, name, email }) => {
-    // @ts-expect-error
     return stripe.confirmKonbiniPayment(clientSecret, {
       payment_method: {
-        konbini: {},
         billing_details: {
           name,
           email,
