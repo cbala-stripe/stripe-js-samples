@@ -80,6 +80,10 @@ export const PAGES = [
     title: "Setup ACH payment details",
     href: "/sample/setup-ach-payment-details",
   },
+  {
+    title: "Payment Method Messaging Element",
+    href: "/sample/payment-method-messaging",
+  },
 ];
 
 export { CREDENTIALS } from "./credentials";

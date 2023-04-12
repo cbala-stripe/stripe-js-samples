@@ -1,5 +1,5 @@
 import type { FormEvent, ReactNode } from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { Stripe, StripeElements } from "@stripe/stripe-js";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 
@@ -7,6 +7,7 @@ import { Button } from "./Button";
 import { Field } from "./Field";
 import { Input } from "./Input";
 import { useDebugElement } from "../hooks/useDebugElement";
+import { useStripeGlobals } from "../hooks/useStripeGlobals";
 
 export type SubmitCallback = (deps: {
   stripe: Stripe;
@@ -32,10 +33,7 @@ export const ElementSample = ({
   const [name, setName] = useState("Jenny Rosen");
   const [email, setEmail] = useState("jenny.rosen@example.com");
 
-  useEffect(() => {
-    (window as any).stripe = stripe;
-    (window as any).elements = elements;
-  }, [stripe, elements]);
+  useStripeGlobals();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
