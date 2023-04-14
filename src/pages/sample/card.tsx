@@ -7,8 +7,10 @@ import {
   Field,
   SubmitCallback,
 } from "../../components";
-import { useClientSecret, useLocaleSelector } from "../../hooks";
+import { useClientSecret } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
+import { LocaleInput } from "../../components/LocaleInput";
+import { useOptionsState } from "../../components/OptionsState";
 
 const CardSample = () => {
   const clientSecret = useClientSecret({
@@ -20,7 +22,7 @@ const CardSample = () => {
     },
   });
 
-  const [locale, localeSelector] = useLocaleSelector();
+  const { locale } = useOptionsState();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmCardPayment(clientSecret, {
@@ -31,7 +33,7 @@ const CardSample = () => {
   };
 
   return (
-    <Layout controls={localeSelector}>
+    <Layout controls={<LocaleInput />}>
       <CredentialedElements options={{ locale }}>
         <ElementSample onSubmit={handleSubmit}>
           <Field label="Card details">

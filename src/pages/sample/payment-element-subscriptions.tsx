@@ -7,12 +7,17 @@ import {
   Layout,
   SubmitCallback,
 } from "../../components";
-import { useAppearanceSelector } from "../../hooks/useAppearanceSelector";
 
 import { getCredentials } from "../../helpers/getCredentials";
+import { useOptionsState } from "../../components/OptionsState";
+import { AppearanceDropdown } from "../../components/AppearanceDropdown";
+import { LocaleInput } from "../../components/LocaleInput";
 
 const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
-  const [appearance, appearanceSelector] = useAppearanceSelector();
+  const {
+    appearanceOption: { appearance, fonts },
+    locale,
+  } = useOptionsState();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmPayment({
@@ -24,10 +29,17 @@ const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
   };
 
   return (
-    <Layout controls={appearanceSelector}>
+    <Layout
+      controls={
+        <>
+          <AppearanceDropdown />
+          <LocaleInput />
+        </>
+      }
+    >
       <CredentialedElements
         credentials="subscriptions"
-        options={{ clientSecret, appearance }}
+        options={{ clientSecret, appearance, fonts, locale }}
       >
         <ElementSample onSubmit={handleSubmit}>
           <PaymentElement />

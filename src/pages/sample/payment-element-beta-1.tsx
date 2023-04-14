@@ -7,8 +7,12 @@ import {
   Layout,
   SubmitCallback,
 } from "../../components";
-import { PAYMENT_ELEMENT_BETA_1_THEMES } from "../../constants/paymentElementThemes";
-import { useAppearanceSelector, useClientSecret } from "../../hooks";
+import { useOptionsState } from "../../components/OptionsState";
+import { PAYMENT_ELEMENT_BETA_1_THEMES } from "../../constants/appearanceOptions";
+import { useClientSecret } from "../../hooks";
+
+import { AppearanceDropdown } from "../../components/AppearanceDropdown";
+import { LocaleInput } from "../../components/LocaleInput";
 
 const PaymentElementBeta1Sample = () => {
   const clientSecret = useClientSecret({
@@ -29,10 +33,10 @@ const PaymentElementBeta1Sample = () => {
     },
   });
 
-  const [appearance, appearanceSelector, fonts] = useAppearanceSelector(
-    "Default",
-    PAYMENT_ELEMENT_BETA_1_THEMES
-  );
+  const {
+    appearanceOption: { appearance, fonts },
+    locale,
+  } = useOptionsState();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmPayment({
@@ -45,11 +49,18 @@ const PaymentElementBeta1Sample = () => {
   };
 
   return (
-    <Layout controls={appearanceSelector}>
+    <Layout
+      controls={
+        <>
+          <AppearanceDropdown options={PAYMENT_ELEMENT_BETA_1_THEMES} />
+          <LocaleInput />
+        </>
+      }
+    >
       {clientSecret && (
         <CredentialedElements
           stripeOptions={{ betas: ["payment_element_beta_1"] }}
-          options={{ fonts }}
+          options={{ locale, fonts }}
         >
           <ElementSample onSubmit={handleSubmit}>
             <PaymentElement

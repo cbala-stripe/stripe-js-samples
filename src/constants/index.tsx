@@ -88,6 +88,3 @@ export const PAGES = [
 
 export { CREDENTIALS } from "./credentials";
 export type { CredentialsKey } from "./credentials";
-
-export { PAYMENT_ELEMENT_THEMES } from "./paymentElementThemes";
-export type { PaymentElementTheme } from "./paymentElementThemes";

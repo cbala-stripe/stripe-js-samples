@@ -11,11 +11,11 @@ import {
   Select,
   TestInstructions,
 } from "../../components";
-import {
-  useAppearanceSelector,
-  useClientSecret,
-  useLocaleSelector,
-} from "../../hooks";
+import { useClientSecret } from "../../hooks";
+
+import { useOptionsState } from "../../components/OptionsState";
+import { AppearanceDropdown } from "../../components/AppearanceDropdown";
+import { LocaleInput } from "../../components/LocaleInput";
 
 import type { IntentRequest } from "../api/intent";
 
@@ -229,8 +229,10 @@ const PaymentElementSample = () => {
 
   const clientSecret = useClientSecret(config.request);
 
-  const [appearance, appearanceSelector, fonts] = useAppearanceSelector();
-  const [locale, localeSelector] = useLocaleSelector();
+  const {
+    appearanceOption: { appearance, fonts },
+    locale,
+  } = useOptionsState();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     if (config.request.intentType === "payment") {
@@ -266,8 +268,8 @@ const PaymentElementSample = () => {
               options={CONFIG_OPTIONS}
             />
           </Field>
-          {appearanceSelector}
-          {localeSelector}
+          <AppearanceDropdown />
+          <LocaleInput />
         </>
       }
     >

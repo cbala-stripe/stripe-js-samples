@@ -4,14 +4,14 @@ import type {
   Appearance,
 } from "@stripe/stripe-js";
 
-export type PaymentElementTheme = {
+export type AppearanceOption = {
   label: string;
   backgroundColor: string;
   appearance: Appearance;
   fonts: Array<CssFontSource | CustomFontSource>;
 };
 
-export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
+export const APPEARANCE_OPTIONS: AppearanceOption[] = [
   {
     label: "Stripe",
     backgroundColor: "#fff",
@@ -191,7 +191,7 @@ export const PAYMENT_ELEMENT_THEMES: PaymentElementTheme[] = [
   },
 ];
 
-export const PAYMENT_ELEMENT_BETA_1_THEMES: PaymentElementTheme[] = [
+export const PAYMENT_ELEMENT_BETA_1_THEMES: AppearanceOption[] = [
   {
     label: "Default",
     backgroundColor: "#fff",

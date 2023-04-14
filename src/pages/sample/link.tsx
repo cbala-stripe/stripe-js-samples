@@ -10,11 +10,10 @@ import {
   Layout,
   SubmitCallback,
 } from "../../components";
-import {
-  useAppearanceSelector,
-  useClientSecret,
-  useLocaleSelector,
-} from "../../hooks";
+import { AppearanceDropdown } from "../../components/AppearanceDropdown";
+import { LocaleInput } from "../../components/LocaleInput";
+import { useOptionsState } from "../../components/OptionsState";
+import { useClientSecret } from "../../hooks";
 
 const PaymentElementSample = () => {
   const clientSecret = useClientSecret({
@@ -26,8 +25,10 @@ const PaymentElementSample = () => {
     },
   });
 
-  const [appearance, appearanceSelector, fonts] = useAppearanceSelector();
-  const [locale, localeSelector] = useLocaleSelector();
+  const {
+    appearanceOption: { appearance, fonts },
+    locale,
+  } = useOptionsState();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmPayment({
@@ -42,8 +43,8 @@ const PaymentElementSample = () => {
     <Layout
       controls={
         <>
-          {appearanceSelector}
-          {localeSelector}
+          <AppearanceDropdown />
+          <LocaleInput />
         </>
       }
     >
