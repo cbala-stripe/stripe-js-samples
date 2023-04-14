@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -28,6 +29,23 @@ const SplitCardSample = () => {
 
   const { locale } = useOptionsState();
 
+  const [showPostalCode, setShowPostalCode] = useState(false);
+
+  // React Stripe.js doesn't have a <PostalCodeElement />
+  const [postalCodeRef, setPostalCodeRef] = useState(null);
+  useEffect(() => {
+    if (!postalCodeRef) {
+      return () => {};
+    }
+
+    const postalCodeElement = (window as any).elements.create("postalCode");
+    postalCodeElement.mount(postalCodeRef);
+
+    return () => {
+      postalCodeElement.destroy();
+    };
+  });
+
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmCardPayment(clientSecret, {
       payment_method: { card: elements.getElement("cardNumber") },
@@ -35,7 +53,21 @@ const SplitCardSample = () => {
   };
 
   return (
-    <Layout controls={<LocaleInput />}>
+    <Layout
+      controls={
+        <>
+          <LocaleInput />
+          <Field label="Postal Code Element">
+            <input
+              type="checkbox"
+              className="mt-2"
+              checked={showPostalCode}
+              onChange={() => setShowPostalCode(!showPostalCode)}
+            />
+          </Field>
+        </>
+      }
+    >
       <CredentialedElements options={{ locale }}>
         <ElementSample onSubmit={handleSubmit}>
           <div className="grid gap-4">
@@ -54,6 +86,11 @@ const SplitCardSample = () => {
                 <CardCvcElement />
               </div>
             </Field>
+            {showPostalCode && (
+              <Field label="Postal Code">
+                <div ref={setPostalCodeRef} className={INPUT_CLASSNAME} />
+              </Field>
+            )}
           </div>
         </ElementSample>
       </CredentialedElements>
