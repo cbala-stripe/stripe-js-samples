@@ -17,6 +17,30 @@ export const PAGES = [
     href: "/sample/payment-request-button",
   },
   {
+    title: "Payment Element",
+    href: "/sample/payment-element",
+  },
+  {
+    title: "Payment Element (beta_1)",
+    href: "/sample/payment-element-beta-1",
+  },
+  {
+    title: "Payment Element (Subscriptions)",
+    href: "/sample/payment-element-subscriptions",
+  },
+  {
+    title: "Payment Element (Deferred Intent)",
+    href: "/sample/payment-element-deferred-intent",
+  },
+  {
+    title: "Express Checkout Element",
+    href: "/sample/express-checkout-element",
+  },
+  {
+    title: "Link",
+    href: "/sample/link",
+  },
+  {
     title: "iDEAL Bank Element",
     href: "/sample/ideal",
   },
@@ -45,26 +69,6 @@ export const PAGES = [
     href: "/sample/konbini",
   },
   {
-    title: "Payment Element",
-    href: "/sample/payment-element",
-  },
-  {
-    title: "Payment Element (beta_1)",
-    href: "/sample/payment-element-beta-1",
-  },
-  {
-    title: "Payment Element (Subscriptions)",
-    href: "/sample/payment-element-subscriptions",
-  },
-  {
-    title: "Payment Element (Deferred Intent)",
-    href: "/sample/payment-element-deferred-intent",
-  },
-  {
-    title: "Link",
-    href: "/sample/link",
-  },
-  {
     title: "Finalize payments on the server",
     href: "/sample/manual-confirmation",
   },
@@ -73,16 +77,20 @@ export const PAGES = [
     href: "/sample/afterpay-message",
   },
   {
+    title: "Affirm Message Element",
+    href: "/sample/affirm-message",
+  },
+  {
+    title: "Payment Method Messaging Element",
+    href: "/sample/payment-method-messaging",
+  },
+  {
     title: "PromptPay",
     href: "/sample/promptpay",
   },
   {
     title: "Setup ACH payment details",
     href: "/sample/setup-ach-payment-details",
-  },
-  {
-    title: "Payment Method Messaging Element",
-    href: "/sample/payment-method-messaging",
   },
 ];
 
