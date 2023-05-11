@@ -1,7 +1,8 @@
 import React, { useState, useLayoutEffect, ReactNode } from "react";
-import { PAGES } from "../constants";
 import { useAppearanceOption } from "./AppearanceDropdown";
+import { useOptionsState } from "./OptionsState";
 import { SampleSelect } from "./SampleSelect";
+import { WidthsPresets } from "./WidthPresets";
 
 const MD_BREAKPOINT = 768;
 
@@ -82,11 +83,6 @@ const SidebarToggle = ({
 };
 
 const Sidebar = ({ controls }: { controls: ReactNode }) => {
-  const options = PAGES.map(({ title, href }) => ({
-    value: href,
-    label: title,
-  }));
-
   const [collapsed, setCollapsed] = useState(window.innerWidth < MD_BREAKPOINT);
 
   const { backgroundColor } = useAppearanceOption();
@@ -103,7 +99,8 @@ const Sidebar = ({ controls }: { controls: ReactNode }) => {
     <div className="bg-zinc-50 fixed top-0 left-0 bottom-0 md:relative flex-col flex max-w-full h-full z-10">
       {!collapsed && (
         <div className="flex-grow overflow-auto flex flex-col gap-y-4 p-4 w-80">
-          <SampleSelect options={options} />
+          <SampleSelect />
+          <WidthsPresets />
           {controls}
         </div>
       )}
@@ -122,11 +119,15 @@ export const Layout = ({
   children?: ReactNode;
   controls?: ReactNode;
 }) => {
+  const { sampleWidth } = useOptionsState();
+
   return (
     <div className="flex w-full h-full">
       <Sidebar controls={controls} />
       <div className="p-8 h-full overflow-y-auto flex-grow pl-20 md:pl-8">
-        {children}
+        <div style={{ width: sampleWidth ? `${sampleWidth}px` : null }}>
+          {children}
+        </div>
       </div>
     </div>
   );

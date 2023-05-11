@@ -11,6 +11,7 @@ type OptionsState = {
   betas: string[];
   stripeJsUrl: string;
   paymentElementConfig: string;
+  sampleWidth: number | null;
 };
 
 const DEFAULT_OPTIONS_STATE: OptionsState = {
@@ -19,6 +20,7 @@ const DEFAULT_OPTIONS_STATE: OptionsState = {
   betas: [],
   stripeJsUrl: process.env.NEXT_PUBLIC_STRIPE_JS_URL,
   paymentElementConfig: PAYMENT_ELEMENT_CONFIGS[0].label,
+  sampleWidth: null,
 };
 
 const OptionsStateContext = createContext(null);
@@ -32,7 +34,7 @@ export const OptionsState = ({ children }: { children: React.ReactNode }) => {
 
     const initialOptionsState = {
       ...DEFAULT_OPTIONS_STATE,
-      ...(qs.parse(url.search) as OptionsState), // TODO: Validate
+      ...qs.parse(url.search), // TODO: Validate
     };
 
     setOptionsState(initialOptionsState);

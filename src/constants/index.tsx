@@ -1,5 +1,5 @@
 export const INPUT_CLASSNAME =
-  "block border border-gray-400 py-2 px-3 mt-1 rounded text-sm w-full max-w-sm";
+  "block border border-gray-400 py-2 px-3 mt-1 rounded text-sm w-full";
 
 export const LABEL_CLASSNAME = "block text-xs uppercase font-medium";
 

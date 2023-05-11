@@ -4,13 +4,15 @@ import { PAGES } from "../constants";
 import { Field } from "./Field";
 import { Select } from "./Select";
 
-export const SampleSelect = ({
-  label = "Sample",
-  options: optionsProp,
-}: {
-  label?: string;
-  options: Array<{ value: string; label: string; disabled?: boolean }>;
-}) => {
+const OPTIONS = [
+  { value: "none", label: "-- Select a sample --", disabled: true },
+  ...PAGES.map(({ title, href }) => ({
+    value: href,
+    label: title,
+  })),
+];
+
+export const SampleSelect = ({ label = "Sample" }: { label?: string }) => {
   const router = useRouter();
 
   const handleChange = (pathname: string) => {
@@ -21,14 +23,9 @@ export const SampleSelect = ({
   const value =
     PAGES.find(({ href }) => href === router.pathname)?.href ?? "none";
 
-  const options = [
-    { value: "none", label: "-- Select a sample --", disabled: true },
-    ...optionsProp,
-  ];
-
   return (
     <Field label={label}>
-      <Select value={value} onChange={handleChange} options={options} />
+      <Select value={value} onChange={handleChange} options={OPTIONS} />
     </Field>
   );
 };
