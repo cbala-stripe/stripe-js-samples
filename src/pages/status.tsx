@@ -48,13 +48,11 @@ const StatusPage = () => {
 
   return (
     <Layout>
-      <div className="mt-6">
-        {credentials && (
-          <CredentialedElements credentials={credentials}>
-            <Status />
-          </CredentialedElements>
-        )}
-      </div>
+      {credentials && (
+        <CredentialedElements credentials={credentials}>
+          <Status />
+        </CredentialedElements>
+      )}
     </Layout>
   );
 };

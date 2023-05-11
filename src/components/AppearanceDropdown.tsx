@@ -3,7 +3,6 @@ import { Select } from "./Select";
 
 import { useOptionsState, useSetOptionsState } from "./OptionsState";
 import { APPEARANCE_OPTIONS } from "../constants/appearanceOptions";
-import { useLayoutEffect } from "react";
 import type { AppearanceOption } from "../constants/appearanceOptions";
 
 export const AppearanceDropdown = ({
@@ -25,18 +24,6 @@ export const AppearanceDropdown = ({
       appearance: label,
     });
   };
-
-  const { backgroundColor } = dropdownOptions.find(
-    (t) => t.value === optionsState.appearance
-  );
-
-  useLayoutEffect(() => {
-    document.body.style.backgroundColor = backgroundColor;
-
-    return () => {
-      document.body.style.backgroundColor = "initial";
-    };
-  }, [backgroundColor]);
 
   return (
     <Field label="Theme">
