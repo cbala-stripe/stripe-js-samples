@@ -10,7 +10,10 @@ import {
   Layout,
   SubmitCallback,
 } from "../../components";
-import { AppearanceDropdown } from "../../components/AppearanceDropdown";
+import {
+  AppearanceDropdown,
+  useAppearanceOption,
+} from "../../components/AppearanceDropdown";
 import { LocaleInput } from "../../components/LocaleInput";
 import { useOptionsState } from "../../components/OptionsState";
 import { useClientSecret } from "../../hooks";
@@ -25,10 +28,8 @@ const PaymentElementSample = () => {
     },
   });
 
-  const {
-    appearanceOption: { appearance, fonts },
-    locale,
-  } = useOptionsState();
+  const { locale } = useOptionsState();
+  const { appearance, fonts } = useAppearanceOption();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmPayment({

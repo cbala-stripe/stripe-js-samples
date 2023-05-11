@@ -10,14 +10,15 @@ import {
 
 import { getCredentials } from "../../helpers/getCredentials";
 import { useOptionsState } from "../../components/OptionsState";
-import { AppearanceDropdown } from "../../components/AppearanceDropdown";
+import {
+  AppearanceDropdown,
+  useAppearanceOption,
+} from "../../components/AppearanceDropdown";
 import { LocaleInput } from "../../components/LocaleInput";
 
 const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
-  const {
-    appearanceOption: { appearance, fonts },
-    locale,
-  } = useOptionsState();
+  const { locale } = useOptionsState();
+  const { appearance, fonts } = useAppearanceOption();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmPayment({

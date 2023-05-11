@@ -1,5 +1,4 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
-import { useRouter } from "next/router";
 import { useState } from "react";
 
 import {
@@ -13,18 +12,24 @@ import {
 } from "../../components";
 import { useClientSecret } from "../../hooks";
 
-import { useOptionsState } from "../../components/OptionsState";
-import { AppearanceDropdown } from "../../components/AppearanceDropdown";
+import {
+  useOptionsState,
+  useSetOptionsState,
+} from "../../components/OptionsState";
+import {
+  AppearanceDropdown,
+  useAppearanceOption,
+} from "../../components/AppearanceDropdown";
 import { LocaleInput } from "../../components/LocaleInput";
 
 import type { IntentRequest } from "../api/intent";
 
-type Config = {
+type PaymentElementConfig = {
   label: string;
   request: IntentRequest;
 };
 
-const CONFIGS: Array<Config> = [
+export const PAYMENT_ELEMENT_CONFIGS: Array<PaymentElementConfig> = [
   {
     label: "EUR, PaymentIntent",
     request: {
@@ -200,39 +205,23 @@ const CONFIGS: Array<Config> = [
   },
 ];
 
-const CONFIG_OPTIONS = CONFIGS.map((config) => ({
+const OPTIONS = PAYMENT_ELEMENT_CONFIGS.map((config) => ({
   ...config,
   value: config.label,
 }));
 
-const useConfig = (): {
-  config: Config;
-  onChangeConfig: (configLabel: string) => void;
-} => {
-  const router = useRouter();
-  const configQueryParam = router.query.config as string;
-  const configLabel = configQueryParam ?? CONFIG_OPTIONS[0].label;
-  const config = CONFIGS.find((config) => config.label === configLabel);
-
-  const onChangeConfig = (configLabel: string) => {
-    router.push({
-      pathname: "/sample/payment-element",
-      query: { config: configLabel },
-    });
-  };
-
-  return { config, onChangeConfig };
-};
-
 const PaymentElementSample = () => {
-  const { config, onChangeConfig } = useConfig();
+  const optionsState = useOptionsState();
+  const setOptionsState = useSetOptionsState();
+  const { paymentElementConfig, locale } = optionsState;
+
+  const config = PAYMENT_ELEMENT_CONFIGS.find(
+    (d) => d.label === paymentElementConfig
+  );
 
   const clientSecret = useClientSecret(config.request);
 
-  const {
-    appearanceOption: { appearance, fonts },
-    locale,
-  } = useOptionsState();
+  const { appearance, fonts } = useAppearanceOption();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     if (config.request.intentType === "payment") {
@@ -264,8 +253,10 @@ const PaymentElementSample = () => {
           <Field label="Scenario">
             <Select
               value={config.label}
-              onChange={onChangeConfig}
-              options={CONFIG_OPTIONS}
+              onChange={(paymentElementConfig) =>
+                setOptionsState({ ...optionsState, paymentElementConfig })
+              }
+              options={OPTIONS}
             />
           </Field>
           <AppearanceDropdown />

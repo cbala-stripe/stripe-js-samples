@@ -13,8 +13,9 @@ export const SampleSelect = ({
 }) => {
   const router = useRouter();
 
-  const handleChange = (value: string) => {
-    router.push(value);
+  const handleChange = (pathname: string) => {
+    const query = window.location.search;
+    router.push(`${pathname}${query}`);
   };
 
   const value =

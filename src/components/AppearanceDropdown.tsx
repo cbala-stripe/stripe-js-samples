@@ -1,5 +1,3 @@
-import { Appearance } from "@stripe/stripe-js";
-
 import { Field } from "./Field";
 import { Select } from "./Select";
 
@@ -22,15 +20,14 @@ export const AppearanceDropdown = ({
   const setOptionsState = useSetOptionsState();
 
   const handleChange = (label: string) => {
-    const appearanceOption = APPEARANCE_OPTIONS.find((d) => d.label === label);
     setOptionsState({
       ...optionsState,
-      appearanceOption,
+      appearance: label,
     });
   };
 
   const { backgroundColor } = dropdownOptions.find(
-    (t) => t.value === optionsState.appearanceOption.label
+    (t) => t.value === optionsState.appearance
   );
 
   useLayoutEffect(() => {
@@ -44,7 +41,7 @@ export const AppearanceDropdown = ({
   return (
     <Field label="Theme">
       <Select
-        value={optionsState.appearanceOption.label}
+        value={optionsState.appearance}
         onChange={handleChange}
         options={dropdownOptions}
       />
@@ -52,10 +49,8 @@ export const AppearanceDropdown = ({
   );
 };
 
-export const useAppearanceOption = (): Appearance => {
-  const {
-    appearanceOption: { appearance },
-  } = useOptionsState();
+export const useAppearanceOption = (): AppearanceOption => {
+  const { appearance: appearanceLabel } = useOptionsState();
 
-  return appearance;
+  return APPEARANCE_OPTIONS.find((d) => d.label === appearanceLabel);
 };
