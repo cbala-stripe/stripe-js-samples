@@ -92,6 +92,10 @@ export const PAGES = [
     title: "Setup ACH payment details",
     href: "/sample/setup-ach-payment-details",
   },
+  {
+    title: "PayPal",
+    href: "/sample/paypal",
+  },
 ];
 
 export { CREDENTIALS } from "./credentials";
