@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Elements } from "@stripe/react-stripe-js";
-import {
+import type {
   StripeConstructorOptions,
   StripeElementsOptions,
 } from "@stripe/stripe-js";

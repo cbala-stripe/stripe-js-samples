@@ -1,4 +1,4 @@
-import { StripeElementLocale } from "@stripe/stripe-js";
+import type { StripeElementLocale } from "@stripe/stripe-js";
 import { ChangeEventHandler } from "react";
 import { Field } from "./Field";
 import { Input } from "./Input";

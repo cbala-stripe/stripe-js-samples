@@ -1,5 +1,5 @@
 import qs from "qs";
-import { StripeElementLocale } from "@stripe/stripe-js";
+import type { StripeElementLocale } from "@stripe/stripe-js";
 import { createContext, useContext, useState, useEffect } from "react";
 
 import { APPEARANCE_OPTIONS } from "../constants/appearanceOptions";

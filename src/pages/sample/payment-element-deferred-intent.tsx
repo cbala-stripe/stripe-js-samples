@@ -1,5 +1,5 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
-import { StripeElementsOptions } from "@stripe/stripe-js";
+import type { StripeElementsOptions } from "@stripe/stripe-js";
 
 import {
   ElementSample,

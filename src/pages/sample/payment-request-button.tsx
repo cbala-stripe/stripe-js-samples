@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
 
 import { useDebugElement } from "../../hooks/useDebugElement";
 import { Layout } from "../../components/Layout";
-import { getCredentials } from "../../helpers/getCredentials";
 import { Field, Select } from "../../components";
+import { getStripePromise } from "../../helpers/getStripePromise";
 
 const THEME_OPTIONS = [
   { value: "dark", label: "dark" },
@@ -40,7 +39,7 @@ const PaymentRequestButtonSample = ({ clientSecret }) => {
       return;
     }
 
-    loadStripe(getCredentials("default").publishableKey).then((stripe) => {
+    getStripePromise("default").then((stripe) => {
       const elements = stripe.elements();
 
       const paymentRequest = stripe.paymentRequest({
