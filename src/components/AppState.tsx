@@ -10,12 +10,13 @@ import {
 
 import { APPEARANCE_OPTIONS } from "../constants/appearanceOptions";
 import { PAYMENT_ELEMENT_CONFIGS } from "../pages/sample/payment-element";
+import { getStripeJsUrlAlias } from "./WithStripeJs";
 
 type AppState = {
   locale: StripeElementLocale;
   appearance: string;
   betas: string[];
-  stripeJsUrl: string;
+  stripeJsUrl: "prod" | "edge" | "localhost" | string;
   paymentElementConfig: string;
   sampleWidth: number | "full";
 };
@@ -24,7 +25,7 @@ const DEFAULT_APP_STATE: AppState = {
   locale: "auto",
   appearance: APPEARANCE_OPTIONS[0].label,
   betas: [],
-  stripeJsUrl: process.env.NEXT_PUBLIC_STRIPE_JS_URL,
+  stripeJsUrl: getStripeJsUrlAlias(process.env.NEXT_PUBLIC_STRIPE_JS_URL),
   paymentElementConfig: PAYMENT_ELEMENT_CONFIGS[0].label,
   sampleWidth: "full",
 };

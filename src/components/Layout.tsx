@@ -114,7 +114,9 @@ export const Layout = ({
     <div className="flex w-full h-full">
       <Sidebar controls={controls} />
       <div className="p-8 h-full overflow-y-auto flex-grow pl-20 md:pl-8">
-        <div style={{ width: sampleWidth ? `${sampleWidth}px` : null }}>
+        <div
+          style={{ width: sampleWidth !== "full" ? `${sampleWidth}px` : null }}
+        >
           {children}
         </div>
       </div>

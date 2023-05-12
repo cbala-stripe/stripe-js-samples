@@ -14,7 +14,7 @@ module.exports = (phase) => {
         "frame-src": [
           "https://js.stripe.com",
           "https://edge-js.stripe.com",
-          "http://localhost",
+          "http://localhost:*",
           "https://*.stripe.me",
           "https://hooks.stripe.com",
         ],
@@ -22,7 +22,7 @@ module.exports = (phase) => {
           `'self'`,
           "https://js.stripe.com",
           "https://edge-js.stripe.com",
-          "http://localhost",
+          "http://localhost:*",
           "https://*.stripe.me",
           "https://maps.googleapis.com",
         ],
