@@ -17,6 +17,7 @@ import { useClientSecret } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
 import { LocaleInput } from "../../components/LocaleInput";
 import { useAppState, useSetAppState } from "../../components/AppState";
+import { Checkbox } from "../../components/Checkbox";
 
 const Fields = () => {
   const { showPostalCodeElement } = useAppState(["showPostalCodeElement"]);
@@ -92,13 +93,9 @@ const SplitCardSample = () => {
         <>
           <LocaleInput />
           <Field label="Postal Code Element">
-            <input
-              type="checkbox"
-              className="mt-2"
+            <Checkbox
               checked={showPostalCodeElement}
-              onChange={() =>
-                setAppState("showPostalCodeElement", !showPostalCodeElement)
-              }
+              onChange={(value) => setAppState("showPostalCodeElement", value)}
             />
           </Field>
         </>

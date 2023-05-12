@@ -13,33 +13,67 @@ import { PAYMENT_ELEMENT_CONFIGS } from "../pages/sample/payment-element";
 import { getStripeJsUrlAlias } from "./WithStripeJs";
 
 type AppState = {
-  locale: StripeElementLocale;
-  appearance: string;
-  betas: string[];
+  // Generally applicable state
   stripeJsUrl: "prod" | "edge" | "localhost" | string;
-  paymentElementConfig: string;
+  betas: string[];
+  locale: StripeElementLocale;
   sampleWidth: number | "full";
+  appearance: string;
+
+  // Split Card Elements
   showPostalCodeElement: boolean;
+
+  // Payment Element
+  paymentElementConfig: string;
+  layout: "auto" | "tabs" | "accordion";
+  radios: boolean;
+  spacedAccordionItems: boolean;
+  defaultCollapsed: boolean;
 };
 
 const DEFAULT_APP_STATE: AppState = {
+  stripeJsUrl: getStripeJsUrlAlias(process.env.NEXT_PUBLIC_STRIPE_JS_URL),
+  betas: [],
   locale: "auto",
   appearance: APPEARANCE_OPTIONS[0].label,
-  betas: [],
-  stripeJsUrl: getStripeJsUrlAlias(process.env.NEXT_PUBLIC_STRIPE_JS_URL),
-  paymentElementConfig: PAYMENT_ELEMENT_CONFIGS[0].label,
   sampleWidth: "full",
   showPostalCodeElement: false,
+  paymentElementConfig: PAYMENT_ELEMENT_CONFIGS[0].label,
+  layout: "auto",
+  radios: true,
+  spacedAccordionItems: false,
+  defaultCollapsed: false,
 };
 
 const AppStateContext = createContext(null);
+
+const parseSearchString = (search: string) => {
+  if (search.startsWith("?")) {
+    search = search.slice(1);
+  }
+
+  const result: Record<string, any> = qs.parse(search);
+
+  // Auto convert boolean string values
+  for (const key of Object.keys(result)) {
+    if (result[key] === "true") {
+      result[key] = true;
+    }
+
+    if (result[key] === "false") {
+      result[key] = false;
+    }
+  }
+
+  return result;
+};
 
 export const AppState = ({ children }: { children: React.ReactNode }) => {
   const [appState, setAppState] = useState<AppState>(null);
 
   // Read options state from query params on initial load
   useEffect(() => {
-    const queryParamData = qs.parse(window.location.search.slice(1));
+    const queryParamData = parseSearchString(window.location.search);
     const initialAppState = { ...DEFAULT_APP_STATE };
 
     for (const key of Object.keys(queryParamData)) {
@@ -87,7 +121,7 @@ export const useAppState = <T extends Array<keyof AppState>>(
 
   // For keys with non-default values currently in use, store the keys as a query param
   useEffect(() => {
-    const queryParams = qs.parse(window.location.search.slice(1));
+    const queryParams = parseSearchString(window.location.search);
 
     // Add app state keys in use that are not the default value
     for (const k of Object.keys(appStateKeysInUse)) {
@@ -113,7 +147,7 @@ export const useAppState = <T extends Array<keyof AppState>>(
 
     // Remove query params no longer needed on unmount
     return () => {
-      const queryParams = qs.parse(window.location.search.slice(1));
+      const queryParams = parseSearchString(window.location.search);
 
       for (const k of Object.keys(queryParams)) {
         if (

@@ -20,6 +20,7 @@ import { LocaleInput } from "../../components/LocaleInput";
 
 import type { IntentRequest } from "../api/intent";
 import { useAppState, useSetAppState } from "../../components/AppState";
+import { LayoutOptions, useLayoutOption } from "../../components/LayoutOptions";
 
 type PaymentElementConfig = {
   label: string;
@@ -220,6 +221,7 @@ const PaymentElementSample = () => {
   const clientSecret = useClientSecret(config.request);
 
   const { appearance, fonts } = useAppearanceOption();
+  const layout = useLayoutOption();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     if (config.request.intentType === "payment") {
@@ -261,6 +263,7 @@ const PaymentElementSample = () => {
           </Field>
           <AppearanceDropdown />
           <LocaleInput />
+          <LayoutOptions />
         </>
       }
     >
@@ -271,7 +274,7 @@ const PaymentElementSample = () => {
         >
           <ElementSample onSubmit={handleSubmit}>
             <TestInstructions paymentMethod={selectedPaymentMethod} />
-            <PaymentElement onChange={handleChange} />
+            <PaymentElement options={{ layout }} onChange={handleChange} />
           </ElementSample>
         </CredentialedElements>
       )}
