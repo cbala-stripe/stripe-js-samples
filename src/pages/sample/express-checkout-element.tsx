@@ -4,8 +4,30 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import type { StripeElementsOptions } from "@stripe/stripe-js";
-import { CredentialedElements, Layout } from "../../components";
+import { CredentialedElements, Field, Layout, Select } from "../../components";
+import { useAppState, useSetAppState } from "../../components/AppState";
 import { useDebugElement } from "../../hooks";
+
+const EceControls = () => {
+  const state = useAppState(["layout"]);
+  const setAppState = useSetAppState();
+
+  return (
+    <>
+      <Field label="layout">
+        <Select
+          value={state.layout}
+          options={[
+            { value: "auto", label: "auto" },
+            { value: "horizontal", label: "horizontal" },
+            { value: "vertical", label: "vertical" },
+          ]}
+          onChange={(value) => setAppState("layout", value)}
+        />
+      </Field>
+    </>
+  );
+};
 
 const Container = () => {
   const stripe = useStripe();
@@ -48,9 +70,14 @@ const Container = () => {
     }
   };
 
+  const { layout } = useAppState(["layout"]);
+
   return (
     <>
-      <ExpressCheckoutElement onConfirm={handleConfirm} />
+      <ExpressCheckoutElement
+        options={{ layout: layout as any }}
+        onConfirm={handleConfirm}
+      />
       {resultElement}
     </>
   );
@@ -64,7 +91,7 @@ const ExpressCheckoutElementSample = () => {
   };
 
   return (
-    <Layout>
+    <Layout controls={<EceControls />}>
       <CredentialedElements
         options={options}
         stripeOptions={{ betas: ["express_checkout_element_beta_1"] }}

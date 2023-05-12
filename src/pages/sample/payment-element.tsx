@@ -274,7 +274,10 @@ const PaymentElementSample = () => {
         >
           <ElementSample onSubmit={handleSubmit}>
             <TestInstructions paymentMethod={selectedPaymentMethod} />
-            <PaymentElement options={{ layout }} onChange={handleChange} />
+            <PaymentElement
+              options={{ layout: layout as any }}
+              onChange={handleChange}
+            />
           </ElementSample>
         </CredentialedElements>
       )}

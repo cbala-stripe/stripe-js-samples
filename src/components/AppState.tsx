@@ -19,13 +19,13 @@ type AppState = {
   locale: StripeElementLocale;
   sampleWidth: number | "full";
   appearance: string;
+  layout: "auto" | "tabs" | "accordion" | "horizontal" | "vertical";
 
   // Split Card Elements
   showPostalCodeElement: boolean;
 
   // Payment Element
   paymentElementConfig: string;
-  layout: "auto" | "tabs" | "accordion";
   radios: boolean;
   spacedAccordionItems: boolean;
   defaultCollapsed: boolean;
