@@ -1,9 +1,9 @@
+import { useAppState, useSetAppState } from "./AppState";
 import { Field } from "./Field";
-import { useOptionsState, useSetOptionsState } from "./OptionsState";
 import { Select } from "./Select";
 
 const OPTIONS = [
-  { value: "dynamic", label: "Dynamic" },
+  { value: "full", label: "Dynamic" },
   { value: "320", label: "320 px (iPhone 4)" },
   { value: "375", label: "375 px (iPhone SE)" },
   { value: "768", label: "768 px (iPad Mini)" },
@@ -12,17 +12,14 @@ const OPTIONS = [
 ];
 
 export const WidthsPresets = () => {
-  const optionsState = useOptionsState();
-  const setOptionsState = useSetOptionsState();
+  const { sampleWidth } = useAppState(["sampleWidth"]);
+  const setAppState = useSetAppState();
 
-  const { sampleWidth } = optionsState;
-
-  const value =
-    OPTIONS.find((d) => +d.value === sampleWidth)?.value ?? "dynamic";
+  const value = OPTIONS.find((d) => +d.value === sampleWidth)?.value ?? "full";
 
   const handleChange = (option: string) => {
-    const sampleWidth = option === "dynamic" ? null : +option;
-    setOptionsState({ ...optionsState, sampleWidth });
+    const sampleWidth = option === "full" ? option : +option;
+    setAppState("sampleWidth", sampleWidth);
   };
 
   return (

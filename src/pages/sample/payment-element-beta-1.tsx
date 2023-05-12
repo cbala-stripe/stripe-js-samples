@@ -7,7 +7,6 @@ import {
   Layout,
   SubmitCallback,
 } from "../../components";
-import { useOptionsState } from "../../components/OptionsState";
 import { PAYMENT_ELEMENT_BETA_1_THEMES } from "../../constants/appearanceOptions";
 import { useClientSecret } from "../../hooks";
 
@@ -16,6 +15,7 @@ import {
   useAppearanceOption,
 } from "../../components/AppearanceDropdown";
 import { LocaleInput } from "../../components/LocaleInput";
+import { useAppState } from "../../components/AppState";
 
 const PaymentElementBeta1Sample = () => {
   const clientSecret = useClientSecret({
@@ -36,7 +36,7 @@ const PaymentElementBeta1Sample = () => {
     },
   });
 
-  const { locale } = useOptionsState();
+  const { locale } = useAppState(["locale"]);
 
   const { appearance, fonts } = useAppearanceOption();
 

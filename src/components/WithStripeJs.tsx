@@ -1,9 +1,9 @@
 import Script from "next/script";
 
-import { useOptionsState } from "./OptionsState";
+import { useAppState } from "./AppState";
 
 export const WithStripeJs = ({ children }: { children: React.ReactNode }) => {
-  const { stripeJsUrl } = useOptionsState();
+  const { stripeJsUrl } = useAppState(["stripeJsUrl"]);
 
   return (
     <>

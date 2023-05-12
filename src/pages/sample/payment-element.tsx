@@ -13,16 +13,13 @@ import {
 import { useClientSecret } from "../../hooks";
 
 import {
-  useOptionsState,
-  useSetOptionsState,
-} from "../../components/OptionsState";
-import {
   AppearanceDropdown,
   useAppearanceOption,
 } from "../../components/AppearanceDropdown";
 import { LocaleInput } from "../../components/LocaleInput";
 
 import type { IntentRequest } from "../api/intent";
+import { useAppState, useSetAppState } from "../../components/AppState";
 
 type PaymentElementConfig = {
   label: string;
@@ -211,9 +208,10 @@ const OPTIONS = PAYMENT_ELEMENT_CONFIGS.map((config) => ({
 }));
 
 const PaymentElementSample = () => {
-  const optionsState = useOptionsState();
-  const setOptionsState = useSetOptionsState();
-  const { paymentElementConfig, locale } = optionsState;
+  const { paymentElementConfig, locale } = useAppState([
+    "paymentElementConfig",
+    "locale",
+  ]);
 
   const config = PAYMENT_ELEMENT_CONFIGS.find(
     (d) => d.label === paymentElementConfig
@@ -246,6 +244,8 @@ const PaymentElementSample = () => {
     setSelectedPaymentMethod(e.value.type);
   };
 
+  const setAppState = useSetAppState();
+
   return (
     <Layout
       controls={
@@ -254,7 +254,7 @@ const PaymentElementSample = () => {
             <Select
               value={config.label}
               onChange={(paymentElementConfig) =>
-                setOptionsState({ ...optionsState, paymentElementConfig })
+                setAppState("paymentElementConfig", paymentElementConfig)
               }
               options={OPTIONS}
             />

@@ -9,15 +9,15 @@ import {
 } from "../../components";
 
 import { getCredentials } from "../../helpers/getCredentials";
-import { useOptionsState } from "../../components/OptionsState";
 import {
   AppearanceDropdown,
   useAppearanceOption,
 } from "../../components/AppearanceDropdown";
 import { LocaleInput } from "../../components/LocaleInput";
+import { useAppState } from "../../components/AppState";
 
 const PaymentElementSubscriptionsSample = ({ clientSecret, subscription }) => {
-  const { locale } = useOptionsState();
+  const { locale } = useAppState(["locale"]);
   const { appearance, fonts } = useAppearanceOption();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {

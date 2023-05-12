@@ -1,9 +1,17 @@
+import { useLayoutEffect } from "react";
+
 import { Field } from "./Field";
 import { Select } from "./Select";
 
-import { useOptionsState, useSetOptionsState } from "./OptionsState";
 import { APPEARANCE_OPTIONS } from "../constants/appearanceOptions";
 import type { AppearanceOption } from "../constants/appearanceOptions";
+import { useAppState, useSetAppState } from "./AppState";
+
+export const useAppearanceOption = (): AppearanceOption => {
+  const { appearance: appearanceLabel } = useAppState(["appearance"]);
+
+  return APPEARANCE_OPTIONS.find((d) => d.label === appearanceLabel);
+};
 
 export const AppearanceDropdown = ({
   options = APPEARANCE_OPTIONS,
@@ -15,29 +23,24 @@ export const AppearanceDropdown = ({
     value: theme.label,
   }));
 
-  const optionsState = useOptionsState();
-  const setOptionsState = useSetOptionsState();
+  const { label, backgroundColor } = useAppearanceOption();
 
+  const setAppState = useSetAppState();
   const handleChange = (label: string) => {
-    setOptionsState({
-      ...optionsState,
-      appearance: label,
-    });
+    setAppState("appearance", label);
   };
+
+  useLayoutEffect(() => {
+    document.body.style.backgroundColor = backgroundColor;
+
+    return () => {
+      document.body.style.backgroundColor = "initial";
+    };
+  }, [backgroundColor]);
 
   return (
     <Field label="Theme">
-      <Select
-        value={optionsState.appearance}
-        onChange={handleChange}
-        options={dropdownOptions}
-      />
+      <Select value={label} onChange={handleChange} options={dropdownOptions} />
     </Field>
   );
-};
-
-export const useAppearanceOption = (): AppearanceOption => {
-  const { appearance: appearanceLabel } = useOptionsState();
-
-  return APPEARANCE_OPTIONS.find((d) => d.label === appearanceLabel);
 };

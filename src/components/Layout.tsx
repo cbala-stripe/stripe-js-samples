@@ -1,6 +1,5 @@
-import React, { useState, useLayoutEffect, ReactNode } from "react";
-import { useAppearanceOption } from "./AppearanceDropdown";
-import { useOptionsState } from "./OptionsState";
+import React, { useState, ReactNode } from "react";
+import { useAppState } from "./AppState";
 import { SampleSelect } from "./SampleSelect";
 import { WidthsPresets } from "./WidthPresets";
 
@@ -85,16 +84,6 @@ const SidebarToggle = ({
 const Sidebar = ({ controls }: { controls: ReactNode }) => {
   const [collapsed, setCollapsed] = useState(window.innerWidth < MD_BREAKPOINT);
 
-  const { backgroundColor } = useAppearanceOption();
-
-  useLayoutEffect(() => {
-    document.body.style.backgroundColor = backgroundColor;
-
-    return () => {
-      document.body.style.backgroundColor = "initial";
-    };
-  }, [backgroundColor]);
-
   return (
     <div className="bg-zinc-50 fixed top-0 left-0 bottom-0 md:relative flex-col flex max-w-full h-full z-10">
       {!collapsed && (
@@ -119,7 +108,7 @@ export const Layout = ({
   children?: ReactNode;
   controls?: ReactNode;
 }) => {
-  const { sampleWidth } = useOptionsState();
+  const { sampleWidth } = useAppState(["sampleWidth"]);
 
   return (
     <div className="flex w-full h-full">

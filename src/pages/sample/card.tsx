@@ -10,7 +10,7 @@ import {
 import { useClientSecret } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
 import { LocaleInput } from "../../components/LocaleInput";
-import { useOptionsState } from "../../components/OptionsState";
+import { useAppState } from "../../components/AppState";
 
 const CardSample = () => {
   const clientSecret = useClientSecret({
@@ -22,7 +22,7 @@ const CardSample = () => {
     },
   });
 
-  const { locale } = useOptionsState();
+  const { locale } = useAppState(["locale"]);
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmCardPayment(clientSecret, {

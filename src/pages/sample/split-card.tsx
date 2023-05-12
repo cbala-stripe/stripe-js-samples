@@ -14,8 +14,8 @@ import {
 } from "../../components";
 import { useClientSecret } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
-import { useOptionsState } from "../../components/OptionsState";
 import { LocaleInput } from "../../components/LocaleInput";
+import { useAppState } from "../../components/AppState";
 
 const SplitCardSample = () => {
   const clientSecret = useClientSecret({
@@ -27,7 +27,7 @@ const SplitCardSample = () => {
     },
   });
 
-  const { locale } = useOptionsState();
+  const { locale } = useAppState(["locale"]);
 
   const [showPostalCode, setShowPostalCode] = useState(false);
 

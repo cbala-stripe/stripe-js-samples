@@ -14,8 +14,8 @@ import {
   AppearanceDropdown,
   useAppearanceOption,
 } from "../../components/AppearanceDropdown";
+import { useAppState } from "../../components/AppState";
 import { LocaleInput } from "../../components/LocaleInput";
-import { useOptionsState } from "../../components/OptionsState";
 import { useClientSecret } from "../../hooks";
 
 const PaymentElementSample = () => {
@@ -28,7 +28,7 @@ const PaymentElementSample = () => {
     },
   });
 
-  const { locale } = useOptionsState();
+  const { locale } = useAppState(["locale"]);
   const { appearance, fonts } = useAppearanceOption();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
