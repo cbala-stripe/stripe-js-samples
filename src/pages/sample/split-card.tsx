@@ -3,6 +3,7 @@ import {
   CardNumberElement,
   CardExpiryElement,
   CardCvcElement,
+  useElements,
 } from "@stripe/react-stripe-js";
 
 import {
@@ -15,7 +16,53 @@ import {
 import { useClientSecret } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
 import { LocaleInput } from "../../components/LocaleInput";
-import { useAppState } from "../../components/AppState";
+import { useAppState, useSetAppState } from "../../components/AppState";
+
+const Fields = () => {
+  const { showPostalCodeElement } = useAppState(["showPostalCodeElement"]);
+
+  const elements = useElements();
+
+  // React Stripe.js doesn't have a <PostalCodeElement />
+  const [postalCodeRef, setPostalCodeRef] = useState(null);
+  useEffect(() => {
+    if (!postalCodeRef || !elements) {
+      return () => {};
+    }
+
+    const postalCodeElement = elements.create("postalCode" as any);
+    postalCodeElement.mount(postalCodeRef);
+
+    return () => {
+      postalCodeElement.destroy();
+    };
+  }, [postalCodeRef, elements]);
+
+  return (
+    <>
+      <Field label="Card number">
+        <div className={INPUT_CLASSNAME}>
+          <CardNumberElement />
+        </div>
+      </Field>
+      <Field label="Expiry">
+        <div className={INPUT_CLASSNAME}>
+          <CardExpiryElement />
+        </div>
+      </Field>
+      <Field label="CVC">
+        <div className={INPUT_CLASSNAME}>
+          <CardCvcElement />
+        </div>
+      </Field>
+      {showPostalCodeElement && (
+        <Field label="Postal Code">
+          <div ref={setPostalCodeRef} className={INPUT_CLASSNAME} />
+        </Field>
+      )}
+    </>
+  );
+};
 
 const SplitCardSample = () => {
   const clientSecret = useClientSecret({
@@ -27,24 +74,11 @@ const SplitCardSample = () => {
     },
   });
 
-  const { locale } = useAppState(["locale"]);
-
-  const [showPostalCode, setShowPostalCode] = useState(false);
-
-  // React Stripe.js doesn't have a <PostalCodeElement />
-  const [postalCodeRef, setPostalCodeRef] = useState(null);
-  useEffect(() => {
-    if (!postalCodeRef) {
-      return () => {};
-    }
-
-    const postalCodeElement = (window as any).elements.create("postalCode");
-    postalCodeElement.mount(postalCodeRef);
-
-    return () => {
-      postalCodeElement.destroy();
-    };
-  });
+  const { locale, showPostalCodeElement } = useAppState([
+    "locale",
+    "showPostalCodeElement",
+  ]);
+  const setAppState = useSetAppState();
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmCardPayment(clientSecret, {
@@ -61,8 +95,10 @@ const SplitCardSample = () => {
             <input
               type="checkbox"
               className="mt-2"
-              checked={showPostalCode}
-              onChange={() => setShowPostalCode(!showPostalCode)}
+              checked={showPostalCodeElement}
+              onChange={() =>
+                setAppState("showPostalCodeElement", !showPostalCodeElement)
+              }
             />
           </Field>
         </>
@@ -71,26 +107,7 @@ const SplitCardSample = () => {
       <CredentialedElements options={{ locale }}>
         <ElementSample onSubmit={handleSubmit}>
           <div className="grid gap-4">
-            <Field label="Card number">
-              <div className={INPUT_CLASSNAME}>
-                <CardNumberElement />
-              </div>
-            </Field>
-            <Field label="Expiry">
-              <div className={INPUT_CLASSNAME}>
-                <CardExpiryElement />
-              </div>
-            </Field>
-            <Field label="CVC">
-              <div className={INPUT_CLASSNAME}>
-                <CardCvcElement />
-              </div>
-            </Field>
-            {showPostalCode && (
-              <Field label="Postal Code">
-                <div ref={setPostalCodeRef} className={INPUT_CLASSNAME} />
-              </Field>
-            )}
+            <Fields />
           </div>
         </ElementSample>
       </CredentialedElements>

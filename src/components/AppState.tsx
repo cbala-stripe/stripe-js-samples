@@ -19,6 +19,7 @@ type AppState = {
   stripeJsUrl: "prod" | "edge" | "localhost" | string;
   paymentElementConfig: string;
   sampleWidth: number | "full";
+  showPostalCodeElement: boolean;
 };
 
 const DEFAULT_APP_STATE: AppState = {
@@ -28,6 +29,7 @@ const DEFAULT_APP_STATE: AppState = {
   stripeJsUrl: getStripeJsUrlAlias(process.env.NEXT_PUBLIC_STRIPE_JS_URL),
   paymentElementConfig: PAYMENT_ELEMENT_CONFIGS[0].label,
   sampleWidth: "full",
+  showPostalCodeElement: false,
 };
 
 const AppStateContext = createContext(null);
