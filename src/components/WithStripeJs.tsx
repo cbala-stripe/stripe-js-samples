@@ -1,4 +1,5 @@
 import Script from "next/script";
+import { useRef } from "react";
 
 import { useAppState } from "./AppState";
 
@@ -35,9 +36,12 @@ const getStripeJsUrlFromAlias = (alias: string): string => {
 export const WithStripeJs = ({ children }: { children: React.ReactNode }) => {
   const { stripeJsUrl } = useAppState(["stripeJsUrl"]);
 
+  // Only attempt loading the script once, with the first URL seen
+  const initialUrl = useRef(stripeJsUrl);
+
   return (
     <>
-      <Script src={getStripeJsUrlFromAlias(stripeJsUrl)} />
+      <Script src={getStripeJsUrlFromAlias(initialUrl.current)} />
       {children}
     </>
   );
