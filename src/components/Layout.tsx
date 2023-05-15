@@ -86,7 +86,11 @@ const Sidebar = ({ controls }: { controls: ReactNode }) => {
   const [collapsed, setCollapsed] = useState(window.innerWidth < MD_BREAKPOINT);
 
   return (
-    <div className="bg-zinc-50 fixed top-0 left-0 bottom-0 md:relative flex-col flex max-w-full h-full z-10">
+    <div
+      className={`bg-zinc-50 fixed top-0 left-0 bottom-0 md:relative flex-col flex max-w-full h-full z-10 ${
+        !collapsed ? "drop-shadow" : ""
+      }  md:drop-shadow-none`}
+    >
       {!collapsed && (
         <div className="flex-grow overflow-auto flex flex-col gap-y-4 p-4 w-80">
           <UrlSelect />
