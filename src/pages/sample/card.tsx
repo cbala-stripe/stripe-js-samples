@@ -10,7 +10,27 @@ import {
 import { useClientSecret } from "../../hooks";
 import { INPUT_CLASSNAME } from "../../constants";
 import { LocaleInput } from "../../components/LocaleInput";
-import { useAppState } from "../../components/AppState";
+import { useAppState, useSetAppState } from "../../components/AppState";
+import { Checkbox } from "../../components/Checkbox";
+
+const LiceCheckbox = () => {
+  const { enableLiceBetas } = useAppState(["enableLiceBetas"]);
+  const setAppState = useSetAppState();
+
+  const handleChange = (value: boolean) => {
+    setAppState("enableLiceBetas", value);
+
+    setTimeout(() => {
+      location.reload();
+    }, 200);
+  };
+
+  return (
+    <Field label="Link betas">
+      <Checkbox checked={enableLiceBetas} onChange={handleChange} />
+    </Field>
+  );
+};
 
 const CardSample = () => {
   const clientSecret = useClientSecret({
@@ -22,7 +42,10 @@ const CardSample = () => {
     },
   });
 
-  const { locale } = useAppState(["locale"]);
+  const { locale, enableLiceBetas } = useAppState([
+    "locale",
+    "enableLiceBetas",
+  ]);
 
   const handleSubmit: SubmitCallback = async ({ stripe, elements }) => {
     return stripe.confirmCardPayment(clientSecret, {
@@ -33,8 +56,25 @@ const CardSample = () => {
   };
 
   return (
-    <Layout controls={<LocaleInput />}>
-      <CredentialedElements options={{ locale }}>
+    <Layout
+      controls={
+        <>
+          <LocaleInput />
+          <LiceCheckbox />
+        </>
+      }
+    >
+      <CredentialedElements
+        options={{ locale }}
+        stripeOptions={{
+          betas: enableLiceBetas
+            ? [
+                "link_in_card_element_beta_1",
+                "link_in_card_element_returning_user_beta_1",
+              ]
+            : [],
+        }}
+      >
         <ElementSample onSubmit={handleSubmit}>
           <Field label="Card details">
             <div className={INPUT_CLASSNAME}>

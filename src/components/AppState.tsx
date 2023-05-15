@@ -21,6 +21,9 @@ type AppState = {
   appearance: string;
   layout: "auto" | "tabs" | "accordion" | "horizontal" | "vertical";
 
+  // Card Element
+  enableLiceBetas: boolean;
+
   // Split Card Elements
   showPostalCodeElement: boolean;
 
@@ -43,6 +46,7 @@ const DEFAULT_APP_STATE: AppState = {
   radios: true,
   spacedAccordionItems: false,
   defaultCollapsed: false,
+  enableLiceBetas: false,
 };
 
 const AppStateContext = createContext(null);
