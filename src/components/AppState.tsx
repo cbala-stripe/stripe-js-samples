@@ -11,6 +11,7 @@ import {
 import { APPEARANCE_OPTIONS } from "../constants/appearanceOptions";
 import { PAYMENT_ELEMENT_CONFIGS } from "../pages/sample/payment-element";
 import { getStripeJsUrlAlias } from "./WithStripeJs";
+import { useStableValue } from "../hooks/useStableValue";
 
 type AppState = {
   // Generally applicable state
@@ -102,9 +103,12 @@ const appStateKeysInUse: { [appStateKey: string]: number } = {};
 
 // lol
 export const useAppState = <T extends Array<keyof AppState>>(
-  keys: T
+  keysArg: T
 ): { [K in T[number]]: AppState[K] } => {
-  const { appState } = useContext(AppStateContext);
+  const { appState: unstableAppState } = useContext(AppStateContext);
+
+  const appState = useStableValue(unstableAppState);
+  const keys = useStableValue(keysArg);
 
   // Track what keys are currently being used from app state
   useEffect(() => {
@@ -166,7 +170,7 @@ export const useAppState = <T extends Array<keyof AppState>>(
       url.search = qs.stringify(queryParams);
       window.history.replaceState(null, "", url.toString());
     };
-  });
+  }, [appState]);
 
   const result = {} as { [K in T[number]]: AppState[K] };
   for (const k of keys) {
@@ -180,7 +184,9 @@ export const useSetAppState = <K extends keyof AppState>(): ((
   key: K,
   value: AppState[K]
 ) => void) => {
-  const { appState, setAppState } = useContext(AppStateContext);
+  const { appState: unstableAppState, setAppState } =
+    useContext(AppStateContext);
+  const appState = useStableValue(unstableAppState);
 
   const set = useCallback(
     (key, value) => {
