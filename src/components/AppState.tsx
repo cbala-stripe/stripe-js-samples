@@ -68,6 +68,10 @@ const parseSearchString = (search: string) => {
     if (result[key] === "false") {
       result[key] = false;
     }
+
+    if (/^\d+$/.test(result[key])) {
+      result[key] = +result[key];
+    }
   }
 
   return result;
