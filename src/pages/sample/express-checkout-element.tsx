@@ -14,7 +14,7 @@ const EceControls = () => {
 
   return (
     <>
-      <Field label="layout">
+      <Field label="Layout">
         <Select
           value={state.layout}
           options={[

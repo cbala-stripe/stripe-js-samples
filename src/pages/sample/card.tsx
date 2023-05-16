@@ -26,7 +26,7 @@ const LiceCheckbox = () => {
   };
 
   return (
-    <Field label="Link betas">
+    <Field label="Link Betas">
       <Checkbox checked={enableLiceBetas} onChange={handleChange} />
     </Field>
   );
