@@ -16,8 +16,7 @@ export const SampleSelect = ({ label = "Sample" }: { label?: string }) => {
   const router = useRouter();
 
   const handleChange = (pathname: string) => {
-    const query = window.location.search;
-    router.push(`${pathname}${query}`);
+    router.push(pathname);
   };
 
   const value =
