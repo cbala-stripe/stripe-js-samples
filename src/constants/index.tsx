@@ -33,6 +33,10 @@ export const PAGES = [
     href: "/sample/payment-element-deferred-intent",
   },
   {
+    title: "Payment Element (Deferred Intent, Two Step)",
+    href: "/sample/payment-element-deferred-intent-two-step",
+  },
+  {
     title: "Express Checkout Element",
     href: "/sample/express-checkout-element",
   },
